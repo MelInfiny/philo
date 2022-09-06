@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	init_philo(t_param *params, t_philo *philo, int i)
+int	init_philo(t_param *params, t_philo *philo, int i)
 {
 	philo->id = i + 1;
 	philo->eat = false;
@@ -13,15 +13,14 @@ void	init_philo(t_param *params, t_philo *philo, int i)
 	if (pthread_create(&philo->th, NULL, &print_infos, (void *) philo) != 0)
 	{
 		perror("creation thread");
-		free(params);
-		exit(1);
+		return (0);
 	}
 	if (pthread_join(philo->th, NULL) != 0)
 	{
 		perror("join thread");
-		free(params);
-		exit(1);
+		return(0);
 	}
+	return (1);
 }
 
 void	set_infos(t_philo *philo, int status, bool state)

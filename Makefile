@@ -11,6 +11,7 @@ LDFLAGS		:=	-fsanitize=address -g -fsanitize=leak
 SRCS_BASE	=	\
 			libft				\
 			print				\
+			free				\
 			parser				\
 			thread				\
 			philos				\

@@ -48,16 +48,16 @@ void	*ft_calloc(size_t n, size_t size_of);
 
 t_philo	*create_philos(t_param *params);
 
+int	init_philo(t_param *params, t_philo *philo, int id);
 unsigned long	get_time(void);
 void	print_time(unsigned long start);
 void	*print_infos(void *philo);
 void	set_infos(t_philo *philo, int status, bool state);
 
-void	init_philo(t_param *params, t_philo *philo, int id);
 void	*tmp(void *philo);
 void	*monitoring_philos(void *table);
 
 void	check_eat(t_table *table);
 void	check_death(t_table *table);
-void	free_table(t_table);
+void	free_table(t_table *table);
 #endif

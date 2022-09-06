@@ -12,8 +12,7 @@ void	check_eat(t_table *table)
 		count ++;
 	}
 	printf("END : Each philosoph is satisfied\n");
-	free(table);
-	pthread_exit(NULL);
+	free_table(table);
 }
 
 void	check_death(t_table *table)
@@ -27,8 +26,7 @@ void	check_death(t_table *table)
 		{
 			print_time(table->params->start_time);
 			printf("%d is died\n", table->philos[count].id);
-			free(table);
-			pthread_exit(NULL);
+			free_table(table);
 		}
 		count ++;
 	}
@@ -51,23 +49,22 @@ void	*monitoring_philos(void *table_tmp)
 	t_table		*table;
 
 	table = (t_table *) table_tmp;
-	table->philos = create_philos((t_param *) table->params);
-	check_eat((t_table *) table);
-	check_death((t_table *) table);
+	table->philos = create_philos(table->params);
+	check_eat(table);
+	check_death(table);
 	printf("monitor \n");
-	free((t_table *) table->philos);
 	return (NULL);
 }	
 
 t_philo	*create_philos(t_param *params)
 {
 	size_t		count;
-	t_philo		*philoss;
+	t_philo		*philos;
 
-	philoss = (t_philo *) calloc(params->nb_philo, sizeof(t_philo));
-	if (!philoss)
+	philos = (t_philo *) calloc(params->nb_philo, sizeof(t_philo));
+	if (!philos)
 	{
-		perror("allocation philoss");
+		perror("allocation philos");
 		free(params);
 		exit(1);
 	}
@@ -76,11 +73,12 @@ t_philo	*create_philos(t_param *params)
 	while (count < params->nb_philo)
 	{
 		print_time(params->start_time);
-		init_philo(params, &philoss[count], count);
+		if (!init_philo(params, &philos[count], count))
+			pthread_exit(NULL);
 		usleep(1);
 		count ++;
 	}
-	return (philoss);
+	return (philos);
 }
 
 int	main(int ac, char **argv)
@@ -95,6 +93,6 @@ int	main(int ac, char **argv)
 	pthread_create(&monitor, NULL, &monitoring_philos, (void *) table);
 	pthread_join(monitor, NULL);
 	printf("main \n");
-	free(table);
+	free_table(table);
 	return (0);
 }
