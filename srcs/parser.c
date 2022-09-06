@@ -1,23 +1,23 @@
 #include "philo.h"
 
-static void	print_table(t_table *table)
+static void	print_params(t_param *params)
 {
-	printf("nb_philosophers : %d\n", table->nb_philo);
-	printf("time_to_eat : %d\n", table->eat_time);
-	printf("time_to_die : %d\n", table->die_time);
-	printf("time_to_sleep : %d\n", table->sleep_time);
-	if (table->max_meals)
-		printf("max meals : %d\n", table->max_meals);
+	printf("nb_philosophers : %d\n", params->nb_philo);
+	printf("time_to_eat : %d\n", params->eat_time);
+	printf("time_to_die : %d\n", params->die_time);
+	printf("time_to_sleep : %d\n", params->sleep_time);
+	if (params->max_meals)
+		printf("max meals : %d\n", params->max_meals);
 }
 
-static void	error_parsing(int error, t_table *table)
+static void	error_parsing(int error, t_param *params)
 {
 	if (error == 1)
 		ft_putstr_fd(2, "Error : Invalid number of arguments\n");
 	if (error == 2)
 		ft_putstr_fd(2, ": Invalid format of arguments\n");
 	ft_putstr_fd(2, "usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep number_of_times_each_philosopher_must_eat\n");
-	free(table);
+	free(params);
 	exit(1);
 }
 
@@ -48,7 +48,7 @@ static int	ft_atoi(char *s, int *sign)
 	return (num * *sign);
 }
 
-static unsigned int	check_int(char *s, t_table *table)
+static unsigned int	check_int(char *s, t_param *params)
 {
 	int	sign;
 	int	nbr;
@@ -58,28 +58,28 @@ static unsigned int	check_int(char *s, t_table *table)
 	if (sign == 0 || nbr < 0)
 	{
 		ft_putstr_fd(2, s);
-		error_parsing(2, table);
+		error_parsing(2, params);
 	}
 	return ((unsigned int) nbr);
 }
 
-t_table	*ft_parser(int ac, char **argv)
+t_param	*ft_parser(int ac, char **argv)
 {
-	t_table	*table;
+	t_param	*params;
 
-	table = (t_table *) calloc (1, sizeof(t_table));
-	if (!table)
+	params = (t_param *) calloc (1, sizeof(t_param));
+	if (!params)
 		exit(1);
 	if (ac < 5 || ac > 6)
-		error_parsing(1, table);
-	table->nb_philo = check_int(argv[1], table);
-	table->die_time = check_int(argv[2], table);
-	table->eat_time = check_int(argv[3], table);
-	table->sleep_time = check_int(argv[4], table);
+		error_parsing(1, params);
+	params->nb_philo = check_int(argv[1], params);
+	params->die_time = check_int(argv[2], params);
+	params->eat_time = check_int(argv[3], params);
+	params->sleep_time = check_int(argv[4], params);
 	if (ac == 6)
-		table->max_meals = check_int(argv[5], table);
+		params->max_meals = check_int(argv[5], params);
 	else	
-		table->max_meals = 0;
-	print_table(table);
-	return (table);
+		params->max_meals = 0;
+	print_params(params);
+	return (params);
 }

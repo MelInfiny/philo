@@ -9,14 +9,14 @@
 # include <sys/time.h>
 # include <pthread.h>
 
-typedef struct s_table {
+typedef struct s_param {
 	unsigned int	nb_philo;
 	unsigned int	die_time;
 	unsigned int	eat_time;
 	unsigned int	sleep_time;
 	unsigned int	max_meals;
 	unsigned long	start_time;
-}	t_table;
+}	t_param;
 
 typedef	struct s_philo {
 	pthread_t		th;
@@ -25,31 +25,39 @@ typedef	struct s_philo {
 	bool			sleep;
 	bool			think;
 	bool			alive;
-	unsigned int			think_time;
+	unsigned int		think_time;
 	unsigned int		id;
 	unsigned int		meals;
+	unsigned long		last_meal;
 }			t_philo;
+
+typedef struct s_table {
+	t_param		*params;
+	t_philo		*philos;
+	int		count;	
+}			t_table;
 
 // ***************** PARSING ********************
 // **********************************************
 
-t_table	*ft_parser(int ac, char **argv);
+t_param	*ft_parser(int ac, char **argv);
 
 void	ft_putstr_fd(int fd, char *s);
 
 void	*ft_calloc(size_t n, size_t size_of);
 
-t_philo	*create_philos(t_table *table);
+t_philo	*create_philos(t_param *params);
 
 unsigned long	get_time(void);
 void	print_time(unsigned long start);
 void	*print_infos(void *philo);
 void	set_infos(t_philo *philo, int status, bool state);
 
-void	init_philo(t_table *table, t_philo *philo, int id);
+void	init_philo(t_param *params, t_philo *philo, int id);
 void	*tmp(void *philo);
 void	*monitoring_philos(void *table);
 
-void	check_eat(t_table *table, t_philo *philos);
-void	check_death(t_table *table, t_philo *philos);
+void	check_eat(t_table *table);
+void	check_death(t_table *table);
+void	free_table(t_table);
 #endif

@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	init_philo(t_table *table, t_philo *philo, int i)
+void	init_philo(t_param *params, t_philo *philo, int i)
 {
 	philo->id = i + 1;
 	philo->eat = false;
@@ -8,17 +8,18 @@ void	init_philo(t_table *table, t_philo *philo, int i)
 	philo->think = false;
 	philo->alive = true;
 	philo->fork = false;
+	philo->last_meal = params->start_time;
 	philo->meals = 0;
 	if (pthread_create(&philo->th, NULL, &print_infos, (void *) philo) != 0)
 	{
 		perror("creation thread");
-		free(table);
+		free(params);
 		exit(1);
 	}
 	if (pthread_join(philo->th, NULL) != 0)
 	{
 		perror("join thread");
-		free(table);
+		free(params);
 		exit(1);
 	}
 }
