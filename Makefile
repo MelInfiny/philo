@@ -10,8 +10,10 @@ LDFLAGS		:=	-fsanitize=address -g -fsanitize=leak
 
 SRCS_BASE	=	\
 			libft				\
+			print				\
 			parser				\
 			thread				\
+			philos				\
 
 SRCS		=	$(addsuffix .c, $(addprefix $(SRCS_FOLDER)/, $(SRCS_BASE)))
 OBJS		=	$(addsuffix .o, $(addprefix $(OBJS_FOLDER)/, $(SRCS_BASE)))

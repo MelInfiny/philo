@@ -3,22 +3,35 @@
 void	check_eat(t_table *table, t_philo *philos)
 {
 	size_t	count;
-	int	res;
 
-	res = 1;
 	count = 0;
 	while (count < table->nb_philo)
 	{
 		if (philos[count].meals < table->max_meals)
-			res = 0;
+			return ;
 		count ++;
 	}
-	if (res == 1)
-	{
 		
-		printf("END : Each philosoph is satisfied\n");
-		free(philos);
-		pthread_exit(NULL);
+	printf("END : Each philosoph is satisfied\n");
+	free(philos);
+	pthread_exit(NULL);
+}
+
+void	check_death(t_table *table, t_philo *philos)
+{
+	size_t	count;
+
+	count = 0;
+	while (count < table->nb_philo)
+	{
+		if (philos[count].alive == false)
+		{
+			print_time();
+			printf("%d is died\n", philos[count].id);
+			free(philos);
+			pthread_exit(NULL);
+		}
+		count ++;
 	}
 }
 
@@ -28,7 +41,8 @@ void	*monitoring_philos(void *table_tmp)
 
 	philos = create_philos((t_table *) table_tmp);
 	check_eat((t_table *) table_tmp, philos);
-	printf("monitor end\n");
+	check_death((t_table *) table_tmp, philos);
+	printf("monitor \n");
 	free(philos);
 	return (NULL);
 }	
@@ -64,7 +78,7 @@ int	main(int ac, char **argv)
 	table = ft_parser(ac, argv);
 	pthread_create(&monitor, NULL, &monitoring_philos, (void *) table);
 	pthread_join(monitor, NULL);
-	printf("main end\n");
+	printf("main \n");
 	free(table);
 	return (0);
 }
