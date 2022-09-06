@@ -8,32 +8,38 @@ void	print_time(void)
 	printf("%ld ms : ", time.tv_usec);
 }
 
-void	set_infos(t_philo *philo, int status)
+void	set_infos(t_philo *philo, int status, bool state)
 {
 	if (status == 0)
-		philo->fork = true;
-	if (status == 1)
-		philo->eat = true;
-	if (status == 2)
-		philo->sleep = true;
-	if (status == 3)
-		philo->think = true;
+		philo->fork = state;
+	else if (status == 1)
+		philo->eat = state;
+	else if (status == 2)
+		philo->sleep = state;
+	else if (status == 3)
+		philo->think = state;
+	else if (status == 4)
+		philo->meals ++;
 	else
 		philo->alive = false;
 }
 
-void	print_infos(t_philo *philo, int status)
+void	*print_infos(void *philo_tmp)
 {
-	if (status == 0)
+	t_philo	*philo;
+
+	philo = philo_tmp;
+	if (philo->fork)
 		printf("%d has taken a fork\n", philo->id);
-	if (status == 1)
+	else if (philo->eat)
 		printf("%d is eating\n", philo->id);
-	else if (status == 2)
+	else if (philo->sleep)
 		printf("%d is sleeping\n", philo->id);
-	else if (status == 3)
+	else if (philo->think)
 		printf("%d is thinking\n", philo->id);
 	else
-		printf("%d is dead\n", philo->id);
+		printf("%d is doing nothing\n", philo->id);
+	return (NULL);
 }
 
 void	*tmp(void *philo)
@@ -47,7 +53,7 @@ void	*tmp(void *philo)
 	return (NULL);
 }
 
-void	init_philo(t_philo *philo, int i)
+void	init_philo(t_table *table, t_philo *philo, int i)
 {
 	philo->eat = false;
 	philo->sleep = false;
@@ -56,35 +62,54 @@ void	init_philo(t_philo *philo, int i)
 	philo->fork = false;
 	philo->meals = 0;
 	philo->id = i + 1;
-	pthread_create(&philo->th, NULL, &tmp, (void *) philo);
+	if (pthread_create(&philo->th, NULL, &print_infos, (void *) philo) != 0)
+	{
+		perror("creation thread");
+		free(table);
+		exit(1);
+	}
 	pthread_join(philo->th, NULL);
 }
 
-void	*monitoring_philos()
+void	*monitoring_philos(void *table_tmp)
+{
+	t_philo		*philos;
+
+	philos = create_philos((t_table *)table_tmp);
+	free(philos);
+	return (NULL);	
+}	
+
+t_philo	*create_philos(t_table *table)
 {
 	size_t		count;
 	t_philo		*philoss;
-	size_t		nb_philos = 4;
 
-	philoss = (t_philo *) calloc(nb_philos, sizeof(t_philo));
+	philoss = (t_philo *) calloc(table->nb_philo, sizeof(t_philo));
 	if (!philoss)
-		exit(1);
-	count = 0;
-	while (count < nb_philos)
 	{
-		printf("init ...");
-		init_philo(&philoss[count], count);
+		perror("allocation philoss");
+		free(table);
+		exit(1);
+	}
+	count = 0;
+	while (count < table->nb_philo)
+	{
+		print_time();
+		init_philo(table, &philoss[count], count);
+		usleep(1);
 		count ++;
 	}
-	free(philoss);
-	return (NULL);
+	return (philoss);
 }
 
-int	main(void)
+int	main(int ac, char **argv)
 {
 	pthread_t	monitor;
+	t_table		*table;
 
-	pthread_create(&monitor, NULL, &monitoring_philos, NULL);
+	table = ft_parser(ac, argv);
+	pthread_create(&monitor, NULL, &monitoring_philos, (void *) table);
 	pthread_join(monitor, NULL);
 	return (0);
 }

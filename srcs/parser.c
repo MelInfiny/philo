@@ -10,13 +10,14 @@ static void	print_table(t_table *table)
 		printf("max meals : %d\n", table->max_meals);
 }
 
-static void	error_parsing(int error)
+static void	error_parsing(int error, t_table *table)
 {
 	if (error == 1)
 		ft_putstr_fd(2, "Error : Invalid number of arguments\n");
 	if (error == 2)
 		ft_putstr_fd(2, ": Invalid format of arguments\n");
 	ft_putstr_fd(2, "usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep number_of_times_each_philosopher_must_eat\n");
+	free(table);
 	exit(1);
 }
 
@@ -47,7 +48,7 @@ static int	ft_atoi(char *s, int *sign)
 	return (num * *sign);
 }
 
-static unsigned int	check_int(char *s)
+static unsigned int	check_int(char *s, t_table *table)
 {
 	int	sign;
 	int	nbr;
@@ -57,24 +58,28 @@ static unsigned int	check_int(char *s)
 	if (sign == 0 || nbr < 0)
 	{
 		ft_putstr_fd(2, s);
-		error_parsing(2);
+		error_parsing(2, table);
 	}
 	return ((unsigned int) nbr);
 }
 
-void	ft_parser(int ac, char **argv)
+t_table	*ft_parser(int ac, char **argv)
 {
-	t_table	table;
+	t_table	*table;
 
+	table = (t_table *) calloc (1, sizeof(t_table));
+	if (!table)
+		exit(1);
 	if (ac < 5 || ac > 6)
-		error_parsing(1);
-	table.nb_philo = check_int(argv[1]);
-	table.die_time = check_int(argv[2]);
-	table.eat_time = check_int(argv[3]);
-	table.sleep_time = check_int(argv[4]);
+		error_parsing(1, table);
+	table->nb_philo = check_int(argv[1], table);
+	table->die_time = check_int(argv[2], table);
+	table->eat_time = check_int(argv[3], table);
+	table->sleep_time = check_int(argv[4], table);
 	if (ac == 6)
-		table.max_meals = check_int(argv[5]);
+		table->max_meals = check_int(argv[5], table);
 	else	
-		table.max_meals = 0;
-	print_table(&table);
+		table->max_meals = 0;
+	print_table(table);
+	return (table);
 }
