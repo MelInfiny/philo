@@ -15,6 +15,7 @@ typedef struct s_table {
 	unsigned int	eat_time;
 	unsigned int	sleep_time;
 	unsigned int	max_meals;
+	unsigned int	start_time;
 }	t_table;
 
 typedef	struct s_philo {
@@ -24,8 +25,9 @@ typedef	struct s_philo {
 	bool			sleep;
 	bool			think;
 	bool			alive;
-	unsigned	int		id;
-	unsigned	int		meals;
+	unsigned int			think_time;
+	unsigned int		id;
+	unsigned int		meals;
 }			t_philo;
 
 // ***************** PARSING ********************
@@ -38,7 +40,9 @@ void	ft_putstr_fd(int fd, char *s);
 void	*ft_calloc(size_t n, size_t size_of);
 
 t_philo	*create_philos(t_table *table);
-void	print_time(void);
+
+unsigned int	get_time(void);
+void	print_time(unsigned int start);
 void	*print_infos(void *philo);
 void	set_infos(t_philo *philo, int status, bool state);
 

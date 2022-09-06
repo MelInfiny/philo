@@ -11,7 +11,6 @@ void	check_eat(t_table *table, t_philo *philos)
 			return ;
 		count ++;
 	}
-		
 	printf("END : Each philosoph is satisfied\n");
 	free(philos);
 	pthread_exit(NULL);
@@ -26,7 +25,7 @@ void	check_death(t_table *table, t_philo *philos)
 	{
 		if (philos[count].alive == false)
 		{
-			print_time();
+			print_time(table->start_time);
 			printf("%d is died\n", philos[count].id);
 			free(philos);
 			pthread_exit(NULL);
@@ -34,10 +33,22 @@ void	check_death(t_table *table, t_philo *philos)
 		count ++;
 	}
 }
+/*
+void	check_alive(void *philos)
+{
+	int	time;
 
+	time = get_time();
+	while (*philos)
+	{
+		if ((*philos).
+	}
+}
+*/
 void	*monitoring_philos(void *table_tmp)
 {
 	t_philo		*philos;
+//	pthread_t	isend;
 
 	philos = create_philos((t_table *) table_tmp);
 	check_eat((t_table *) table_tmp, philos);
@@ -60,9 +71,10 @@ t_philo	*create_philos(t_table *table)
 		exit(1);
 	}
 	count = 0;
+	table->start_time = get_time();
 	while (count < table->nb_philo)
 	{
-		print_time();
+		print_time(table->start_time);
 		init_philo(table, &philoss[count], count);
 		usleep(1);
 		count ++;

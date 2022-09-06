@@ -1,11 +1,19 @@
 #include "philo.h"
 
-void	print_time(void)
+void	print_time(unsigned int start)
 {
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	printf("%ld ms : ", time.tv_usec);
+	printf("%ld ms : ", time.tv_usec - start);
+}
+
+unsigned int	get_time()
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_usec);
 }
 
 void	*print_infos(void *philo_tmp)
@@ -19,9 +27,7 @@ void	*print_infos(void *philo_tmp)
 		printf("%d is eating\n", philo->id);
 	else if (philo->sleep)
 		printf("%d is sleeping\n", philo->id);
-	else if (philo->think)
-		printf("%d is thinking\n", philo->id);
 	else
-		printf("%d is doing nothing\n", philo->id);
+		printf("%d is thinking\n", philo->id);
 	return (NULL);
 }
