@@ -1,83 +1,36 @@
 #include "philo.h"
 
-void	print_time(void)
+void	check_eat(t_table *table, t_philo *philos)
 {
-	struct timeval	time;
+	size_t	count;
+	int	res;
 
-	gettimeofday(&time, NULL);
-	printf("%ld ms : ", time.tv_usec);
-}
-
-void	set_infos(t_philo *philo, int status, bool state)
-{
-	if (status == 0)
-		philo->fork = state;
-	else if (status == 1)
-		philo->eat = state;
-	else if (status == 2)
-		philo->sleep = state;
-	else if (status == 3)
-		philo->think = state;
-	else if (status == 4)
-		philo->meals ++;
-	else
-		philo->alive = false;
-}
-
-void	*print_infos(void *philo_tmp)
-{
-	t_philo	*philo;
-
-	philo = philo_tmp;
-	if (philo->fork)
-		printf("%d has taken a fork\n", philo->id);
-	else if (philo->eat)
-		printf("%d is eating\n", philo->id);
-	else if (philo->sleep)
-		printf("%d is sleeping\n", philo->id);
-	else if (philo->think)
-		printf("%d is thinking\n", philo->id);
-	else
-		printf("%d is doing nothing\n", philo->id);
-	return (NULL);
-}
-
-void	*tmp(void *philo)
-{
-	struct timeval	time;
-	
-	t_philo	*p = philo;
-	gettimeofday(&time, NULL);
-	printf("%ld ms : new philo %d\n", time.tv_usec, p->id);
-	sleep(1);
-	return (NULL);
-}
-
-void	init_philo(t_table *table, t_philo *philo, int i)
-{
-	philo->eat = false;
-	philo->sleep = false;
-	philo->think = false;
-	philo->alive = true;
-	philo->fork = false;
-	philo->meals = 0;
-	philo->id = i + 1;
-	if (pthread_create(&philo->th, NULL, &print_infos, (void *) philo) != 0)
+	res = 1;
+	count = 0;
+	while (count < table->nb_philo)
 	{
-		perror("creation thread");
-		free(table);
-		exit(1);
+		if (philos[count].meals < table->max_meals)
+			res = 0;
+		count ++;
 	}
-	pthread_join(philo->th, NULL);
+	if (res == 1)
+	{
+		
+		printf("END : Each philosoph is satisfied\n");
+		free(philos);
+		pthread_exit(NULL);
+	}
 }
 
 void	*monitoring_philos(void *table_tmp)
 {
 	t_philo		*philos;
 
-	philos = create_philos((t_table *)table_tmp);
+	philos = create_philos((t_table *) table_tmp);
+	check_eat((t_table *) table_tmp, philos);
+	printf("monitor end\n");
 	free(philos);
-	return (NULL);	
+	return (NULL);
 }	
 
 t_philo	*create_philos(t_table *table)
@@ -111,5 +64,7 @@ int	main(int ac, char **argv)
 	table = ft_parser(ac, argv);
 	pthread_create(&monitor, NULL, &monitoring_philos, (void *) table);
 	pthread_join(monitor, NULL);
+	printf("main end\n");
+	free(table);
 	return (0);
 }
