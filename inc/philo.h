@@ -15,7 +15,7 @@ typedef struct s_table {
 	unsigned int	eat_time;
 	unsigned int	sleep_time;
 	unsigned int	max_meals;
-	unsigned int	start_time;
+	unsigned long	start_time;
 }	t_table;
 
 typedef	struct s_philo {
@@ -41,8 +41,8 @@ void	*ft_calloc(size_t n, size_t size_of);
 
 t_philo	*create_philos(t_table *table);
 
-unsigned int	get_time(void);
-void	print_time(unsigned int start);
+unsigned long	get_time(void);
+void	print_time(unsigned long start);
 void	*print_infos(void *philo);
 void	set_infos(t_philo *philo, int status, bool state);
 

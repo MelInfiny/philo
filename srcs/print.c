@@ -1,19 +1,27 @@
 #include "philo.h"
 
-void	print_time(unsigned int start)
+void	print_time(unsigned long start)
 {
 	struct timeval	time;
+	unsigned long	mstime;
+	unsigned long	stime;
 
 	gettimeofday(&time, NULL);
-	printf("%ld ms : ", time.tv_usec - start);
+	stime = time.tv_sec * 1000;
+	mstime = time.tv_usec / 1000;
+	printf("%ld ms : ", (stime + mstime) - start);
 }
 
-unsigned int	get_time()
+unsigned long	get_time()
 {
 	struct timeval	time;
+	unsigned long	mstime;
+	unsigned long	stime;
 
 	gettimeofday(&time, NULL);
-	return (time.tv_usec);
+	stime = time.tv_sec * 1000;
+	mstime = time.tv_usec / 1000;
+	return (stime + mstime);
 }
 
 void	*print_infos(void *philo_tmp)
