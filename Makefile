@@ -15,6 +15,7 @@ SRCS_BASE	=	\
 			parser				\
 			thread				\
 			philos				\
+			ending				\
 
 SRCS		=	$(addsuffix .c, $(addprefix $(SRCS_FOLDER)/, $(SRCS_BASE)))
 OBJS		=	$(addsuffix .o, $(addprefix $(OBJS_FOLDER)/, $(SRCS_BASE)))

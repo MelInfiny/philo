@@ -34,7 +34,7 @@ typedef	struct s_philo {
 typedef struct s_table {
 	t_param		*params;
 	t_philo		*philos;
-	int		count;
+	int		id;
 	int		end;	
 }			t_table;
 
@@ -47,9 +47,10 @@ void	ft_putstr_fd(int fd, char *s);
 
 void	*ft_calloc(size_t n, size_t size_of);
 
-t_philo	*create_philos(t_param *params);
+void	create_philos(t_table *table);
 
-int	init_philo(t_param *params, t_philo *philo, int id);
+//int	init_philo(t_param *params, t_philo *philo, int id);
+int	init_philo(t_table *table);
 unsigned long	get_time(void);
 
 void	philosophers(t_table *table);
@@ -60,6 +61,7 @@ void	*print_infos(void *philo);
 void	*tmp(void *philo);
 void	*monitor(void *table);
 void	*check_alive(void *table);
+void	*set_actions(void *table);
 
 void	check_table(t_table *table);
 void	free_table(t_table *table);
