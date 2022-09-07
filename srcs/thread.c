@@ -1,65 +1,63 @@
 #include "philo.h"
 
-void	check_eat(t_table *table)
+void	check_table(t_table *table)
 {
-	size_t	count;
-
-	count = 0;
-	while (count < table->params->nb_philo)
+	if (table->end == 0)
+		return ;
+	if (table->end == -1)
 	{
-		if (table->philos[count].meals < table->params->max_meals)
-			return ;
-		count ++;
+		printf("END : Each philosoph is satisfied\n");
 	}
-	printf("END : Each philosoph is satisfied\n");
-	free_table(table);
+	if (table->end > 0)
+	{
+		printf("%ld ms %d is died\n", get_time(), table->philos[table->end].id);
+	}
 }
 
-void	check_death(t_table *table)
+void	*check_alive(void *table_tmp)
 {
-	size_t	count;
+	t_table	*table;
+	int	count;
+	int	satisfied;
 
+	table = table_tmp;
 	count = 0;
+	satisfied = 0;
 	while (count < table->params->nb_philo)
 	{
-		if (table->philos[count].alive == false)
+		if (table->philos[count].last_meal + table->params->die_time >= get_time() && table->philos[count].eat == false)
 		{
-			print_time(table->params->start_time);
-			printf("%d is died\n", table->philos[count].id);
-			free_table(table);
+			table->philos[count].alive = false;
+			table->end = count;
+			break;
 		}
+		if (table->philos[count].meals >= table->params->max_meals)
+			satisfied ++;
 		count ++;
 	}
+	if (satisfied >= table->params->nb_philo)
+		table->end = -1;
+	check_table(table);
+	return (NULL);
 }
-/*
-void	check_alive(void *philos)
-{
-	int	time;
 
-	time = get_time();
-	while (*philos)
-	{
-		if ((*philos).
-	}
-}
-*/
 void	*monitoring_philos(void *table_tmp)
 {
-//	pthread_t	isend;
+	pthread_t	ending;
 	t_table		*table;
 
 	table = (t_table *) table_tmp;
 	table->philos = create_philos(table->params);
-	check_eat(table);
-	check_death(table);
+	pthread_create(&ending, NULL, &check_alive, table_tmp);
+	pthread_join(ending, NULL);
 	printf("monitor \n");
 	return (NULL);
 }	
 
 t_philo	*create_philos(t_param *params)
 {
-	size_t		count;
-	t_philo		*philos;
+	int	count;
+	t_philo	*philos;
 
 	philos = (t_philo *) calloc(params->nb_philo, sizeof(t_philo));
 	if (!philos)

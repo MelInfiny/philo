@@ -10,7 +10,7 @@
 # include <pthread.h>
 
 typedef struct s_param {
-	unsigned int	nb_philo;
+	int	nb_philo;
 	unsigned int	die_time;
 	unsigned int	eat_time;
 	unsigned int	sleep_time;
@@ -34,7 +34,8 @@ typedef	struct s_philo {
 typedef struct s_table {
 	t_param		*params;
 	t_philo		*philos;
-	int		count;	
+	int		count;
+	int		end;	
 }			t_table;
 
 // ***************** PARSING ********************
@@ -56,8 +57,8 @@ void	set_infos(t_philo *philo, int status, bool state);
 
 void	*tmp(void *philo);
 void	*monitoring_philos(void *table);
+void	*check_alive(void *table);
 
-void	check_eat(t_table *table);
-void	check_death(t_table *table);
+void	check_table(t_table *table);
 void	free_table(t_table *table);
 #endif
