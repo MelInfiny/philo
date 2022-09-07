@@ -10,7 +10,7 @@
 # include <pthread.h>
 
 typedef struct s_param {
-	int	nb_philo;
+	int		nb_philo;
 	unsigned int	die_time;
 	unsigned int	eat_time;
 	unsigned int	sleep_time;
@@ -51,12 +51,14 @@ t_philo	*create_philos(t_param *params);
 
 int	init_philo(t_param *params, t_philo *philo, int id);
 unsigned long	get_time(void);
-void	print_time(unsigned long start);
-void	*print_infos(void *philo);
-void	set_infos(t_philo *philo, int status, bool state);
 
+void	philosophers(t_table *table);
+void	set_infos(t_philo *philo, int status, bool state);
+void	print_time(unsigned long start);
+
+void	*print_infos(void *philo);
 void	*tmp(void *philo);
-void	*monitoring_philos(void *table);
+void	*monitor(void *table);
 void	*check_alive(void *table);
 
 void	check_table(t_table *table);

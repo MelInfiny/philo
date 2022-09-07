@@ -41,17 +41,14 @@ void	*check_alive(void *table_tmp)
 	return (NULL);
 }
 
-void	*monitoring_philos(void *table_tmp)
+void	philosophers(t_table *table)
 {
-	pthread_t	ending;
-	t_table		*table;
+	pthread_t	monitor;
 
-	table = (t_table *) table_tmp;
 	table->philos = create_philos(table->params);
-	pthread_create(&ending, NULL, &check_alive, table_tmp);
-	pthread_join(ending, NULL);
+	pthread_create(&monitor, NULL, &check_alive, (void *) table);
+	pthread_join(monitor, NULL);
 	printf("monitor \n");
-	return (NULL);
 }	
 
 t_philo	*create_philos(t_param *params)
@@ -81,15 +78,13 @@ t_philo	*create_philos(t_param *params)
 
 int	main(int ac, char **argv)
 {
-	pthread_t	monitor;
 	t_table		*table;
 
 	table = (t_table *) calloc(1, sizeof(t_table));
 	if (!table)
 		return (0);
 	table->params = ft_parser(ac, argv);
-	pthread_create(&monitor, NULL, &monitoring_philos, (void *) table);
-	pthread_join(monitor, NULL);
+	philosophers(table);
 	printf("main \n");
 	free_table(table);
 	return (0);
