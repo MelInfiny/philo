@@ -54,15 +54,16 @@ int	init_philo(t_table *table);
 unsigned long	get_time(void);
 
 void	philosophers(t_table *table);
-void	set_infos(t_philo *philo, int status, bool state);
+void	set_infos(t_table *table, int status, bool state);
 void	print_time(unsigned long start);
 
-void	*print_infos(void *philo);
+void	print_infos(t_philo *philo, unsigned long time);
 void	*tmp(void *philo);
 void	*monitor(void *table);
 void	*check_alive(void *table);
 void	*set_actions(void *table);
 
+void	reset_infos(t_philo *philo, int id);
 void	check_table(t_table *table);
 void	free_table(t_table *table);
 #endif

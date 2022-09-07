@@ -24,18 +24,15 @@ unsigned long	get_time()
 	return (stime + mstime);
 }
 
-void	*print_infos(void *philo_tmp)
+void	print_infos(t_philo *philo, unsigned long time)
 {
-	t_philo	*philo;
-
-	philo = philo_tmp;
+	print_time(time);
 	if (philo->fork)
 		printf("%d has taken a fork\n", philo->id);
 	else if (philo->eat)
 		printf("%d is eating\n", philo->id);
 	else if (philo->sleep)
 		printf("%d is sleeping\n", philo->id);
-	else
+	else if (philo->think)
 		printf("%d is thinking\n", philo->id);
-	return (NULL);
 }

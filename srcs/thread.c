@@ -28,7 +28,6 @@ void	create_philos(t_table *table)
 		table->id = count;
 		if (!init_philo(table))
 			pthread_exit(NULL);
-		usleep(1);
 		count ++;
 	}
 }
@@ -41,6 +40,7 @@ int	main(int ac, char **argv)
 	if (!table)
 		return (0);
 	table->params = ft_parser(ac, argv);
+	table->end = 0;
 	philosophers(table);
 	printf("main \n");
 	free_table(table);
