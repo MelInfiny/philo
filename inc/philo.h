@@ -51,6 +51,7 @@ void	create_philos(t_table *table);
 
 //int	init_philo(t_param *params, t_philo *philo, int id);
 int	init_philo(t_table *table);
+int	is_available(t_table *table);
 unsigned long	get_time(void);
 
 void	philosophers(t_table *table);
@@ -63,7 +64,7 @@ void	*monitor(void *table);
 void	*check_alive(void *table);
 void	*set_actions(void *table);
 
-void	reset_infos(t_philo *philo, int id);
+void	reset_infos(t_table *table);
 void	check_table(t_table *table);
 void	free_table(t_table *table);
 #endif
