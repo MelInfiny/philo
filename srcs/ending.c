@@ -35,7 +35,7 @@ void	*check_alive(void *table_tmp)
 			satisfied ++;
 		count ++;
 	}
-	if (satisfied >= table->params->nb_philo)
+	if (satisfied >= table->params->nb_philo - 1)
 		table->end = -1;
 	check_table(table);
 	return (NULL);

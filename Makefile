@@ -25,7 +25,7 @@ $(OBJS_FOLDER)/%.o:		$(SRCS_FOLDER)/%.c
 				$(CC) $(CFLAGS) -c -o $@ $<
 
 $(NAME):			$(OBJS)
-				$(CC)  -o $(NAME) $(OBJS) $(LDFLAGS)
+				$(CC)  -o $(NAME) $(OBJS) -lpthread 
 
 clean:
 			rm $(OBJS)

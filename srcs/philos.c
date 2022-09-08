@@ -13,12 +13,29 @@ int	init_philo(t_table *table)
 		perror("creation thread");
 		return (0);
 	}
+	/*
 	if (pthread_join(table->philos[id].th, NULL) != 0)
 	{
 		perror("join thread");
 		return(0);
 	}
+	*/
 	return (1);
+}
+
+void	join_philos(t_table *table)
+{
+	int	count;
+
+	count = 0;
+	while (count < table->params->nb_philo)
+	{
+		if (pthread_join(table->philos[count].th, NULL) != 0)
+		{
+			perror("join thread");
+			pthread_exit(NULL);
+		}
+	}
 }
 
 void	*set_actions(void *table_tmp)
@@ -28,21 +45,23 @@ void	*set_actions(void *table_tmp)
 
 	table = table_tmp;
 	id = table->id;
-	//while (table->end == 0)
-	if (is_available(table))
+	while (table->end == 0)
 	{
-		set_infos(table, 0, true);		// fork
-		set_infos(table, 1, true);			// eat
-		usleep(table->params->eat_time * 1000);		
-		set_infos(table, 1, false);
-		set_infos(table, 0, false);		// fork
-		table->philos[id].last_meal = get_time() + table->params->eat_time;
-		set_infos(table, 4, true);		// last meal
-		set_infos(table, 2, true);		// sleep
-		usleep(table->params->sleep_time * 1000);
-		set_infos(table, 2, false);
+		if (is_available(table))
+		{
+			set_infos(table, 0, true);		// fork
+			set_infos(table, 1, true);			// eat
+			usleep(table->params->eat_time * 1000);		
+			set_infos(table, 1, false);
+			set_infos(table, 0, false);		// fork
+			table->philos[id].last_meal = get_time() + table->params->eat_time;
+			set_infos(table, 4, true);		// last meal
+			set_infos(table, 2, true);		// sleep
+			usleep(table->params->sleep_time * 1000);
+			set_infos(table, 2, false);
+			set_infos(table, 3, true);		//think
+		}
 	}
-	set_infos(table, 3, true);		//think
 	return (NULL);
 }
 
@@ -57,7 +76,7 @@ int	is_available(t_table *table)
 		prec = table->params->nb_philo - 1;
 	else
 		prec = id - 1;
-	if (id == table->params->nb_philo)
+	if (id == table->params->nb_philo - 1)
 		next = 0;
 	else
 		next = id + 1;

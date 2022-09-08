@@ -55,6 +55,7 @@ int	is_available(t_table *table);
 unsigned long	get_time(void);
 
 void	philosophers(t_table *table);
+void	join_philos(t_table *table);
 void	set_infos(t_table *table, int status, bool state);
 void	print_time(unsigned long start);
 
