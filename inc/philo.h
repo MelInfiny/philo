@@ -34,6 +34,7 @@ typedef	struct s_philo {
 typedef struct s_table {
 	t_param		*params;
 	t_philo		*philos;
+	int		satisfied;
 	int		id;
 	int		end;	
 }			t_table;
@@ -52,7 +53,8 @@ void	create_philos(t_table *table);
 //int	init_philo(t_param *params, t_philo *philo, int id);
 int	init_philo(t_table *table);
 int	is_available(t_table *table);
-unsigned long	get_time(void);
+unsigned long	get_start_time(void);
+unsigned long	get_time(unsigned long start);
 
 void	philosophers(t_table *table);
 void	join_philos(t_table *table);

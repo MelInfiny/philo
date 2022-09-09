@@ -13,6 +13,7 @@ void	check_table(t_table *table)
 		print_time(table->params->start_time);
 		printf("%d is died\n", table->philos[table->end].id);
 	}
+	printf("table end for %d\n\n", table->end);
 }
 
 void	*check_alive(void *table_tmp)
@@ -24,19 +25,21 @@ void	*check_alive(void *table_tmp)
 	table = table_tmp;
 	count = 0;
 	satisfied = 0;
-	while (table->end == 0 || count < table->params->nb_philo)
+	while (table->id > -1 && table->end == 0)
 	{
-		if (table->philos[count].last_meal + table->params->die_time >= get_time() && table->philos[count].eat == false)
+		printf("philo id %d\n", table->philos[count].id);
+		if (satisfied >= table->params->nb_philo - 1)
+			table->end = -1;
+		if (table->philos[count].last_meal + table->params->die_time <= get_time(table->params->start_time) && table->philos[count].eat == false)
 		{
 			table->philos[count].alive = false;
 			table->end = count;
 		}
-		if (table->philos[count].meals >= table->params->max_meals)
-			satisfied ++;
-		count ++;
+		if (count < table->params->nb_philo)
+			count ++;
+		else
+			count = 0;
 	}
-	if (satisfied >= table->params->nb_philo - 1)
-		table->end = -1;
 	check_table(table);
 	return (NULL);
 }

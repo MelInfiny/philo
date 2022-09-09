@@ -12,7 +12,7 @@ void	print_time(unsigned long start)
 	printf("%ld ms : ", (stime + mstime) - start);
 }
 
-unsigned long	get_time()
+unsigned long	get_start_time()
 {
 	struct timeval	time;
 	unsigned long	mstime;
@@ -22,6 +22,18 @@ unsigned long	get_time()
 	stime = time.tv_sec * 1000;
 	mstime = time.tv_usec / 1000;
 	return (stime + mstime);
+}
+
+unsigned long	get_time(unsigned long start)
+{
+	struct timeval	time;
+	unsigned long	mstime;
+	unsigned long	stime;
+
+	gettimeofday(&time, NULL);
+	stime = time.tv_sec * 1000;
+	mstime = time.tv_usec / 1000;
+	return (stime + mstime) - start;
 }
 
 void	print_infos(t_philo *philo, unsigned long time)
