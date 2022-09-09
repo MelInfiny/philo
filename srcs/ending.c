@@ -25,9 +25,9 @@ void	*check_alive(void *table_tmp)
 	table = table_tmp;
 	count = 0;
 	satisfied = 0;
-	while (table->id > -1 && table->end == 0)
+	while (table->end == 0)
 	{
-		printf("philo id %d\n", table->philos[count].id);
+	//	printf("%ld philo id %d\n", get_time(table->params->start_time), table->philos[count].id);	//db
 		if (satisfied >= table->params->nb_philo - 1)
 			table->end = -1;
 		if (table->philos[count].last_meal + table->params->die_time <= get_time(table->params->start_time) && table->philos[count].eat == false)

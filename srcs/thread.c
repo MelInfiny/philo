@@ -4,10 +4,11 @@ void	philosophers(t_table *table)
 {
 	pthread_t	monitor;
 
-	pthread_create(&monitor, NULL, &check_alive, (void *) table);
 	create_philos(table);
-	pthread_join(monitor, NULL);
+	table->id = 0;
+	pthread_create(&monitor, NULL, &check_alive, (void *) table);
 	join_philos(table);
+	pthread_join(monitor, NULL);
 	printf("monitor \n");
 }	
 
@@ -26,7 +27,7 @@ void	create_philos(t_table *table)
 	while (count < table->params->nb_philo)
 	{
 	//	print_time(table->params->start_time);
-		table->id = count;
+		table->philos[count].id = count;
 		if (!init_philo(table))
 			pthread_exit(NULL);
 		count ++;

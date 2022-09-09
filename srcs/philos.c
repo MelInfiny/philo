@@ -5,6 +5,8 @@ int	init_philo(t_table *table)
 	int	id;
 
 	id = table->id;
+	print_time(table->params->start_time);
+	printf("init philo %d\n", table->id);
 	reset_infos(table);
 	if (id % 2 == 0)
 		table->philos[id].fork = 1;
@@ -31,7 +33,16 @@ void	join_philos(t_table *table)
 		count ++;
 	}
 }
-
+/*
+void	*set_actions(void *table_tmp)		//setactions pour t philo ;ulti access table id
+{
+	t_table *table = table_tmp;
+	print_time(table->params->start_time);
+//	while (table->end == 0)
+		printf("action philo %d\n", table->id);
+	return(NULL);
+}
+*/
 void	*set_actions(void *table_tmp)
 {
 	t_table	*table;
@@ -41,7 +52,7 @@ void	*set_actions(void *table_tmp)
 	id = table->id;
 	while (table->end == 0)
 	{
-		printf("action philo %d", table->philos[id].id);
+	//	printf("action philo %d\n", table->philos[id].id);
 		if (table->philos[id].fork == 1 || is_available(table))
 		{
 			set_infos(table, 0, true);		// fork
