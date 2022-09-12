@@ -10,9 +10,10 @@ static void	check_end(t_table *table)
 	}
 	if (table->end > 0)
 	{
-		printf("%ld ms : %d is died\n", get_time(table->params->start_time), table->philos[table->end].id);
+		printf("%ld ms : %d is died\n", get_time(table->params->start_time), table->end);
 	}
-	printf("table end for %d\n\n", table->end);
+	free_table(table);
+	exit(0);
 }
 
 void	*check_alive(void *table_tmp)

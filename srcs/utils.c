@@ -1,7 +1,21 @@
 #include "philo.h"
 
+static void	free_mutex(t_table *table)
+{
+	int	count;
+
+	count = 0;
+	while (count < table->params->nb_philo)
+	{
+		pthread_mutex_unlock(&table->philos[count].mutex);
+		pthread_mutex_destroy(&table->philos[count].mutex);
+		count ++;
+	}
+}
+
 void	free_table(t_table *table)
 {
+	free_mutex(table);
 	free(table->philos);
 	free(table->params);
 	free(table);

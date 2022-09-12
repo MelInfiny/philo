@@ -20,12 +20,12 @@ typedef struct s_param {
 
 typedef	struct s_philo {
 	pthread_t		th;
+	pthread_mutex_t		mutex;
 	bool			fork;
 	bool			eat;
 	bool			sleep;
 	bool			think;
 	bool			alive;
-	unsigned int		think_time;
 	unsigned int		id;
 	unsigned int		meals;
 	unsigned long		last_meal;
@@ -52,6 +52,8 @@ unsigned long	get_start_time(void);
 unsigned long	get_time(unsigned long start);
 
 int	init_philo(t_table *table);
+int	get_prec(t_table *table, t_philo *philo);
+int	get_next(t_table *table, t_philo *philo);
 void	create_philos(t_table *table);
 void	join_philos(t_table *table);
 void	*check_alive(void *table);

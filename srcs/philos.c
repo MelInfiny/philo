@@ -16,7 +16,7 @@ void	create_philos(t_table *table)
 	{
 		table->id = count;
 		if (!init_philo(table))
-			pthread_exit(NULL);
+			free_table(table);
 		count ++;
 	}
 }
@@ -27,10 +27,12 @@ int	init_philo(t_table *table)
 
 	id = table->id;
 	reset_infos(&table->philos[id], id);
+	if (id % 2 == 0 && id != table->params->nb_philo -1)
+		table->philos[id].fork = true;
 	if (pthread_create(&table->philos[id].th, NULL, &set_actions, (void *) table) != 0)
 	{
 		perror("creation thread");
-		return (0);
+		free_table(table);
 	}
 	return (1);
 }
@@ -51,17 +53,41 @@ void	join_philos(t_table *table)
 	}
 }
 
+int	get_prec(t_table *table, t_philo *philo)
+{
+	int	id;
+	int	prec;
+
+	id = philo->id - 1;
+	if (id == 0)
+		prec = table->params->nb_philo - 1;
+	else
+		prec = id;
+	return (prec);
+}
+
+int	get_next(t_table *table, t_philo *philo)
+{
+	int	id;
+	int	next;
+
+	id = philo->id - 1;
+	if (id == table->params->nb_philo - 1)
+		next = 0;
+	else
+		next = philo->id;
+	return (next);
+}
+
 void	reset_infos(t_philo *philo, int id)
 {
 	philo->id = id + 1;
-	if (id % 2 == 0)
-		philo->fork = true;
-	else
-		philo->fork = false;
+	philo->fork = false;
 	philo->eat = false;
 	philo->sleep = false;
 	philo->think = false;
 	philo->alive = true;
 	philo->meals = 0;
 	philo->last_meal = 0;
+	pthread_mutex_init(&philo->mutex, NULL);
 }
