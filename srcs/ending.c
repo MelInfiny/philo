@@ -20,15 +20,13 @@ void	*check_alive(void *table_tmp)
 {
 	t_table	*table;
 	int	count;
-	int	satisfied;
 
 	table = table_tmp;
 	count = 0;
-	satisfied = 0;
 	while (table->end == 0)
 	{
 	//	printf("%ld philo id %d\n", get_time(table->params->start_time), table->philos[count].id);	//db
-		if (satisfied >= table->params->nb_philo - 1)
+		if (table->satisfied >= table->params->nb_philo - 1)
 			table->end = -1;
 		if (table->philos[count].last_meal + table->params->die_time <= get_time(table->params->start_time) && table->philos[count].eat == false)
 		{

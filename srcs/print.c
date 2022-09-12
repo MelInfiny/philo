@@ -41,10 +41,10 @@ void	print_infos(t_philo *philo, unsigned long time)
 	print_time(time);
 	if (philo->fork)
 		printf("%d has taken a fork\n", philo->id);
-	else if (philo->eat)
+	if (philo->eat)
 		printf("%d is eating\n", philo->id);
-	else if (philo->sleep)
+	if (philo->sleep)
 		printf("%d is sleeping\n", philo->id);
-	else if (philo->think)
+	if (philo->think)
 		printf("%d is thinking\n", philo->id);
 }

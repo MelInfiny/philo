@@ -27,7 +27,8 @@ void	create_philos(t_table *table)
 	while (count < table->params->nb_philo)
 	{
 	//	print_time(table->params->start_time);
-		table->philos[count].id = count;
+		table->id = count;
+	//	table->philos[count].id = count + 1;
 		if (!init_philo(table))
 			pthread_exit(NULL);
 		count ++;
