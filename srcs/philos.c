@@ -29,36 +29,21 @@ void	join_philos(t_table *table)
 		count ++;
 	}
 }
-/*
-void	*set_actions(void *table_tmp)		//setactions pour t philo ;ulti access table id
-{
-	t_table *table = table_tmp;
-	print_time(table->params->start_time);
-//	while (table->end == 0)
-		printf("action philo %d\n", table->id);
-	return(NULL);
-}
-*/
+
 void	*set_actions(void *table_tmp)
 {
 	t_table	*table;
 	t_philo *philo;
-	int	count;
 
 	table = table_tmp;
 	philo = &table->philos[table->id];
 	while (table->end == 0)
 	{
-	//	printf("action philo %d\n", table->philos[id].id);
-//		if (philo->id / 2 == 0 && count / 2 != 0 )
 		if (philo->fork == 1)
 			get_meal(table, philo);
 		else if (is_available(table, philo))
 			get_meal(table, philo);
-		else
-			usleep(1500);
-		count ++;
-		if (philo->meals >= table->params->max_meals)
+		if (philo->meals == table->params->max_meals)
 			table->satisfied ++;
 	}
 	return (NULL);

@@ -33,18 +33,18 @@ unsigned long	get_time(unsigned long start)
 	gettimeofday(&time, NULL);
 	stime = time.tv_sec * 1000;
 	mstime = time.tv_usec / 1000;
-	return (stime + mstime) - start;
+	return ((stime + mstime) - start);
 }
 
 void	print_infos(t_philo *philo, unsigned long time)
 {
-	print_time(time);
+	//print_time(time);
 	if (philo->fork)
-		printf("%d has taken a fork\n", philo->id);
+		printf("%ld ms : %d has taken a fork\n", get_time(time), philo->id);
 	if (philo->eat)
-		printf("%d is eating\n", philo->id);
+		printf("%ld ms : %d is eating\n", get_time(time), philo->id);
 	if (philo->sleep)
-		printf("%d is sleeping\n", philo->id);
+		printf("%ld ms : %d is sleeping\n", get_time(time), philo->id);
 	if (philo->think)
-		printf("%d is thinking\n", philo->id);
+		printf("%ld ms : %d is thinking\n", get_time(time), philo->id);
 }

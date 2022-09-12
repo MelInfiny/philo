@@ -79,7 +79,7 @@ t_param	*ft_parser(int ac, char **argv)
 	if (ac == 6)
 		params->max_meals = check_int(argv[5], params);
 	else	
-		params->max_meals = 0;
+		params->max_meals = -1;
 	print_params(params);
 	return (params);
 }
