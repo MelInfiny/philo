@@ -67,7 +67,7 @@ void	*monitor(void *table);
 void	*check_alive(void *table);
 void	*set_actions(void *table);
 
-void	reset_infos(t_table *table);
+void	reset_infos(t_philo *philo, int id);
 void	check_table(t_table *table);
 void	free_table(t_table *table);
 #endif

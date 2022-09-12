@@ -6,8 +6,8 @@ int	init_philo(t_table *table)
 
 	id = table->id;
 	print_time(table->params->start_time);
-	printf("init philo %d\n", table->id);
-	reset_infos(table);
+	printf("init philo %d\n", id);
+	reset_infos(&table->philos[id], id);
 	if (id % 2 == 0)
 		table->philos[id].fork = 1;
 	if (pthread_create(&table->philos[id].th, NULL, &set_actions, (void *) table) != 0)
@@ -46,14 +46,16 @@ void	*set_actions(void *table_tmp)		//setactions pour t philo ;ulti access table
 void	*set_actions(void *table_tmp)
 {
 	t_table	*table;
+	//t_philo *philo;
 	int	id;
 
 	table = table_tmp;
 	id = table->id;
+	//philo = &table->philos[id];
 	while (table->end == 0)
 	{
 	//	printf("action philo %d\n", table->philos[id].id);
-		if (table->philos[id].fork == 1 || is_available(table))
+		if (table->philos[id].fork == 1)
 		{
 			set_infos(table, 0, true);		// fork
 			set_infos(table, 1, true);			// eat
@@ -116,17 +118,14 @@ void	set_infos(t_table *table, int status, bool state)
 		print_infos(&table->philos[id], table->params->start_time);
 }
 
-void	reset_infos(t_table *table)
+void	reset_infos(t_philo *philo, int id)
 {
-	int	id;
-
-	id = table->id;
-	table->philos[id].id = id + 1;
-	table->philos[id].eat = false;
-	table->philos[id].sleep = false;
-	table->philos[id].think = false;
-	table->philos[id].fork = false;
-	table->philos[id].alive = true;
-	table->philos[id].meals = 0;
-	table->philos[id].last_meal = 0;
+	philo->id = id + 1;
+	philo->eat = false;
+	philo->sleep = false;
+	philo->think = false;
+	philo->fork = false;
+	philo->alive = true;
+	philo->meals = 0;
+	philo->last_meal = 0;
 }
