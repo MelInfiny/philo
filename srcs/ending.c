@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	check_table(t_table *table)
+static void	check_end(t_table *table)
 {
 	if (table->end == 0)
 		return ;
@@ -36,6 +36,6 @@ void	*check_alive(void *table_tmp)
 			table->end = table->philos[count].id;
 		}
 	}
-	check_table(table);
+	check_end(table);
 	return (NULL);
 }

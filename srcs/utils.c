@@ -1,5 +1,13 @@
 #include "philo.h"
 
+void	free_table(t_table *table)
+{
+	free(table->philos);
+	free(table->params);
+	free(table);
+	exit(1);
+}
+
 void	ft_putstr_fd(int fd, char *s)
 {
 	while (*s)

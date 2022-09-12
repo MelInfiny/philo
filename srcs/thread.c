@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	philosophers(t_table *table)
+static void	philosophers(t_table *table)
 {
 	pthread_t	monitor;
 
@@ -10,30 +10,6 @@ void	philosophers(t_table *table)
 	join_philos(table);
 	pthread_join(monitor, NULL);
 	printf("monitor \n");
-}	
-
-void	create_philos(t_table *table)
-{
-	int		count;
-
-	table->philos = (t_philo *) calloc(table->params->nb_philo, sizeof(t_philo));
-	if (!table->philos)
-	{
-		perror("allocation philos");
-		free_table(table);
-	}
-	count = 0;
-	table->params->start_time = get_start_time();
-	while (count < table->params->nb_philo)
-	{
-	//	print_time(table->params->start_time);
-		table->id = count;
-	//	table->philos[count].id = count + 1;
-		if (!init_philo(table))
-			pthread_exit(NULL);
-		count ++;
-	}
-
 }
 
 int	main(int ac, char **argv)
