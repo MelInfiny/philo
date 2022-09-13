@@ -21,6 +21,7 @@ typedef struct s_param {
 typedef	struct s_philo {
 	pthread_t		th;
 	pthread_mutex_t		mutex;
+	bool			start;
 	bool			fork;
 	bool			eat;
 	bool			sleep;

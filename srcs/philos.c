@@ -18,6 +18,7 @@ void	create_philos(t_table *table)
 		if (!init_philo(table))
 			free_table(table);
 		count ++;
+		usleep(100);
 	}
 }
 
@@ -26,9 +27,9 @@ int	init_philo(t_table *table)
 	int	id;
 
 	id = table->id;
-	reset_infos(&table->philos[id], id);
+	table->philos[id].start = false;
 	if (id % 2 == 0 && id != table->params->nb_philo -1)
-		table->philos[id].fork = true;
+		table->philos[id].start = true;
 	if (pthread_create(&table->philos[id].th, NULL, &set_actions, (void *) table) != 0)
 	{
 		perror("creation thread");
@@ -62,7 +63,7 @@ int	get_prec(t_table *table, t_philo *philo)
 	if (id == 0)
 		prec = table->params->nb_philo - 1;
 	else
-		prec = id;
+		prec = id - 1;
 	return (prec);
 }
 
