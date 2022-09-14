@@ -13,7 +13,7 @@ static void	free_mutex(t_table *table)
 	}
 }
 
-void	free_thread(t_table *table)
+void	detach_philos(t_table *table)
 {
 	int	count;
 

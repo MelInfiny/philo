@@ -12,9 +12,7 @@ static void	check_end(t_table *table)
 	{
 		printf("%ld ms : %d is died\n", get_time(table->params->start_time), table->end);
 	}
-	exit(0);
-//	free_table(table);
-//	exit(0);
+	return ;
 }
 
 void	*check_alive(void *table_tmp)
@@ -23,10 +21,11 @@ void	*check_alive(void *table_tmp)
 	int	count;
 
 	table = table_tmp;
-	count = -1;
+	while (table->created < table->params->nb_philo)
+		count = -1;
 	while (table->end == 0)
 	{
-		if (count < table->params->nb_philo)
+		if (count < table->params->nb_philo - 1)
 			count ++;
 		else
 			count = 0;
@@ -37,6 +36,7 @@ void	*check_alive(void *table_tmp)
 			table->philos[count].alive = false;
 			table->end = table->philos[count].id;
 		}
+		usleep(200);
 	}
 	check_end(table);
 	return (NULL);

@@ -15,15 +15,20 @@ void	*set_actions(void *table_tmp)
 	{
 		if (!philo->start)
 			usleep(1000);
-		if (!pthread_mutex_lock(&philo->mutex) && !pthread_mutex_lock(&table->philos[prec].mutex))
+		if (!pthread_mutex_lock(&philo->mutex))
+		{
+			set_infos(table, philo, 0, true);		// fork
+			if (!pthread_mutex_lock(&table->philos[prec].mutex))
 				get_meal(table, philo, prec);
+			else
+			pthread_mutex_unlock(&philo->mutex);
+		}
 	}
 	return (NULL);
 }
 
 void	get_meal(t_table *table, t_philo *philo, int prec)
 {
-	set_infos(table, philo, 0, true);		// fork
 	set_infos(table, philo, 0, true);		// fork
 	set_infos(table, philo, 0, false);
 	set_infos(table, philo, 1, true);		// eat

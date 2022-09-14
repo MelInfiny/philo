@@ -3,13 +3,14 @@
 void	create_philos(t_table *table)
 {
 	int		count;
-
+/*
 	table->philos = (t_philo *) calloc(table->params->nb_philo, sizeof(t_philo));
 	if (!table->philos)
 	{
 		perror("allocation philos");
 		free_table(table);
 	}
+	*/
 	count = 0;
 	table->params->start_time = get_start_time();
 	while (count < table->params->nb_philo)
