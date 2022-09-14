@@ -37,7 +37,8 @@ typedef struct s_table {
 	t_philo		*philos;
 	int		satisfied;
 	int		id;
-	int		end;	
+	int		end;
+	int		created;
 }			t_table;
 
 // ***************** PARSING ********************
@@ -46,6 +47,7 @@ typedef struct s_table {
 t_param	*ft_parser(int ac, char **argv);
 
 void	free_table(t_table *table);
+void	free_thread(t_table *table);
 void	ft_putstr_fd(int fd, char *s);
 void	*ft_calloc(size_t n, size_t size_of);
 
@@ -54,7 +56,6 @@ unsigned long	get_time(unsigned long start);
 
 int	init_philo(t_table *table);
 int	get_prec(t_table *table, t_philo *philo);
-int	get_next(t_table *table, t_philo *philo);
 void	create_philos(t_table *table);
 void	join_philos(t_table *table);
 void	*check_alive(void *table);
@@ -64,6 +65,6 @@ void	print_infos(t_philo *philo, unsigned long time);
 void	reset_infos(t_philo *philo, int id);
 void	*set_actions(void *table);
 
-void	get_meal(t_table *table, t_philo *philo);
-int	is_available(t_table *table, t_philo *philo);
+void	get_meal(t_table *table, t_philo *philo, int prec);
+//int	is_available(t_table *table, t_philo *philo);
 #endif

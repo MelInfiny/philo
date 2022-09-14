@@ -12,8 +12,9 @@ static void	check_end(t_table *table)
 	{
 		printf("%ld ms : %d is died\n", get_time(table->params->start_time), table->end);
 	}
-	free_table(table);
 	exit(0);
+//	free_table(table);
+//	exit(0);
 }
 
 void	*check_alive(void *table_tmp)
@@ -29,7 +30,7 @@ void	*check_alive(void *table_tmp)
 			count ++;
 		else
 			count = 0;
-		if (table->satisfied >= table->params->nb_philo - 1)
+		if (table->satisfied > 0 && table->satisfied >= table->params->nb_philo - 1)
 			table->end = -1;
 		if (table->philos[count].last_meal + table->params->die_time <= get_time(table->params->start_time) && table->philos[count].eat == false)
 		{

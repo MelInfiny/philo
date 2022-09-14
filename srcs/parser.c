@@ -16,6 +16,8 @@ static void	error_parsing(int error, t_param *params)
 		ft_putstr_fd(2, "Error : Invalid number of arguments\n");
 	if (error == 2)
 		ft_putstr_fd(2, ": Invalid format of arguments\n");
+	if (error == 3)
+		ft_putstr_fd(2, ": Cannot launch simulation with parameters <= 0\n");
 	ft_putstr_fd(2, "usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep number_of_times_each_philosopher_must_eat\n");
 	free(params);
 	exit(1);
@@ -55,10 +57,15 @@ static unsigned int	check_int(char *s, t_param *params)
 
 	sign = 1;
 	nbr = ft_atoi(s, &sign);
-	if (sign == 0 || nbr < 0)
+	if (sign == 0)
 	{
 		ft_putstr_fd(2, s);
 		error_parsing(2, params);
+	}
+	else if (nbr <= 0)
+	{
+		ft_putstr_fd(2, s);
+		error_parsing(3, params);
 	}
 	return ((unsigned int) nbr);
 }
@@ -79,7 +86,7 @@ t_param	*ft_parser(int ac, char **argv)
 	if (ac == 6)
 		params->max_meals = check_int(argv[5], params);
 	else	
-		params->max_meals = -1;
+		params->max_meals = 0;
 	print_params(params);
 	return (params);
 }

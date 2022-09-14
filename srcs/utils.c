@@ -1,17 +1,5 @@
 #include "philo.h"
 
-static void	free_thread(t_table *table)
-{
-	int	count;
-
-	count = 0;
-	while (count < table->params->nb_philo)
-	{
-		pthread_detach(table->philos[count].th);
-		count ++;
-	}
-}
-
 static void	free_mutex(t_table *table)
 {
 	int	count;
@@ -25,14 +13,24 @@ static void	free_mutex(t_table *table)
 	}
 }
 
+void	free_thread(t_table *table)
+{
+	int	count;
+
+	count = 0;
+	while (count < table->params->nb_philo)
+	{
+		pthread_detach(table->philos[count].th);
+		count ++;
+	}
+}
+
 void	free_table(t_table *table)
 {
 	free_mutex(table);
-	free_thread(table);
 	free(table->philos);
 	free(table->params);
 	free(table);
-	exit(1);
 }
 
 void	ft_putstr_fd(int fd, char *s)

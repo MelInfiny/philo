@@ -27,13 +27,14 @@ int	init_philo(t_table *table)
 	int	id;
 
 	id = table->id;
-	table->philos[id].start = false;
+	reset_infos(&table->philos[id], table->id);
 	if (id % 2 == 0 && id != table->params->nb_philo -1)
 		table->philos[id].start = true;
+	table->created ++;
 	if (pthread_create(&table->philos[id].th, NULL, &set_actions, (void *) table) != 0)
 	{
 		perror("creation thread");
-		free_table(table);
+		return (0);
 	}
 	return (1);
 }
@@ -67,22 +68,10 @@ int	get_prec(t_table *table, t_philo *philo)
 	return (prec);
 }
 
-int	get_next(t_table *table, t_philo *philo)
-{
-	int	id;
-	int	next;
-
-	id = philo->id - 1;
-	if (id == table->params->nb_philo - 1)
-		next = 0;
-	else
-		next = philo->id;
-	return (next);
-}
-
 void	reset_infos(t_philo *philo, int id)
 {
 	philo->id = id + 1;
+	philo->start = false;
 	philo->fork = false;
 	philo->eat = false;
 	philo->sleep = false;

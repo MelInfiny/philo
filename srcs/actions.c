@@ -8,45 +8,37 @@ void	*set_actions(void *table_tmp)
 	
 	table = table_tmp;
 	philo = &table->philos[table->id];
-	reset_infos(philo, table->id);
+	while (table->created < table->params->nb_philo)
+		prec ++;
 	prec = get_prec(table, philo);
-	printf("prec = %d\n", prec);
-	if (philo->start)
-	{
-		if (!pthread_mutex_lock(&philo->mutex) && !pthread_mutex_lock(&table->philos[prec].mutex))
-			get_meal(table, philo);
-	}
-	else 
-		usleep(500);
 	while (table->end == 0)
 	{
+		if (!philo->start)
+			usleep(1000);
 		if (!pthread_mutex_lock(&philo->mutex) && !pthread_mutex_lock(&table->philos[prec].mutex))
-			get_meal(table, philo);
+				get_meal(table, philo, prec);
 	}
 	return (NULL);
 }
 
-void	get_meal(t_table *table, t_philo *philo)
+void	get_meal(t_table *table, t_philo *philo, int prec)
 {
-	int	prec;
-	
-	prec = get_prec(table, philo);
-	set_infos(table, philo, 0, true);		// eat
 	set_infos(table, philo, 0, true);		// fork
-	set_infos(table, philo, 0, false);		// fork
+	set_infos(table, philo, 0, true);		// fork
+	set_infos(table, philo, 0, false);
 	set_infos(table, philo, 1, true);		// eat
 	usleep(table->params->eat_time * 1000);	
+	philo->last_meal = get_time(table->params->start_time); //	die when he eats
 	pthread_mutex_unlock(&philo->mutex);
 	pthread_mutex_unlock(&table->philos[prec].mutex);
 
 	set_infos(table, philo, 1, false);
 	set_infos(table, philo, 2, true);		// sleep
-	philo->last_meal = get_time(table->params->start_time);
 	set_infos(table, philo, 4, false);		// last meal
 	usleep(table->params->sleep_time * 1000);
 	set_infos(table, philo, 2, false);
 	set_infos(table, philo, 3, true);		//think
-	if (philo->meals == table->params->max_meals)
+	if (table->params->max_meals > 0 && philo->meals == table->params->max_meals)
 		table->satisfied ++;
 }
 
