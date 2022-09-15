@@ -4,10 +4,11 @@ void	*set_actions(void *table_tmp)
 {
 	t_table	*table;
 	t_philo *philo;
-	int	prec;
+	unsigned int	prec;
 	
 	table = table_tmp;
 	philo = &table->philos[table->id];
+	pthread_detach(philo->th);
 	while (table->created < table->params->nb_philo)
 		prec ++;
 	prec = get_prec(table, philo);
@@ -18,10 +19,10 @@ void	*set_actions(void *table_tmp)
 		if (!pthread_mutex_lock(&philo->mutex))
 		{
 			set_infos(table, philo, 0, true);		// fork
-			if (!pthread_mutex_lock(&table->philos[prec].mutex))
+			if (prec != philo->id && !pthread_mutex_lock(&table->philos[prec].mutex))
 				get_meal(table, philo, prec);
 			else
-			pthread_mutex_unlock(&philo->mutex);
+				pthread_mutex_unlock(&philo->mutex);
 		}
 	}
 	return (NULL);
@@ -32,8 +33,8 @@ void	get_meal(t_table *table, t_philo *philo, int prec)
 	set_infos(table, philo, 0, true);		// fork
 	set_infos(table, philo, 0, false);
 	set_infos(table, philo, 1, true);		// eat
-	usleep(table->params->eat_time * 1000);	
 	philo->last_meal = get_time(table->params->start_time); //	die when he eats
+	usleep(table->params->eat_time * 1000);	
 	pthread_mutex_unlock(&philo->mutex);
 	pthread_mutex_unlock(&table->philos[prec].mutex);
 

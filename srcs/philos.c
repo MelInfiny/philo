@@ -29,9 +29,9 @@ int	init_philo(t_table *table)
 
 	id = table->id;
 	reset_infos(&table->philos[id], table->id);
+	table->created ++;
 	if (id % 2 == 0 && id != table->params->nb_philo -1)
 		table->philos[id].start = true;
-	table->created ++;
 	if (pthread_create(&table->philos[id].th, NULL, &set_actions, (void *) table) != 0)
 	{
 		perror("creation thread");

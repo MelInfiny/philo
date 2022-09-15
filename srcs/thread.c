@@ -14,7 +14,7 @@ static void	philosophers(t_table *table)
 	pthread_create(&monitor, NULL, &check_alive, (void *) table);
 	create_philos(table);
 	printf("monitor \n");
-	detach_philos(table);
+	//detach_philos(table);
 	pthread_join(monitor, NULL);
 	//pthread_detach(monitor);
 }

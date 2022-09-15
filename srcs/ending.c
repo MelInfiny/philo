@@ -33,8 +33,10 @@ void	*check_alive(void *table_tmp)
 	table = table_tmp;
 	while (table->created < table->params->nb_philo || get_time(table->params->start_time) < get_start(table))
 		count = -1;
+	//detach_philos(table);
 	while (table->end == 0)
 	{
+		printf("alive %ld\n", get_time(table->params->start_time));
 		if (count < table->params->nb_philo - 1)
 			count ++;
 		else

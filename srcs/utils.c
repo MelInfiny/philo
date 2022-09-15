@@ -7,8 +7,8 @@ static void	free_mutex(t_table *table)
 	count = 0;
 	while (count < table->params->nb_philo)
 	{
-		pthread_mutex_unlock(&table->philos[count].mutex);
-		pthread_mutex_destroy(&table->philos[count].mutex);
+		if (!pthread_mutex_unlock(&table->philos[count].mutex)) 
+			pthread_mutex_destroy(&table->philos[count].mutex);
 		count ++;
 	}
 }
@@ -20,7 +20,8 @@ void	detach_philos(t_table *table)
 	count = 0;
 	while (count < table->params->nb_philo)
 	{
-		pthread_detach(table->philos[count].th);
+		if (pthread_detach(table->philos[count].th) != 0)
+			perror("cannot detach thread. Possibly a zombi ");
 		count ++;
 	}
 }
