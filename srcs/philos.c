@@ -19,7 +19,6 @@ void	create_philos(t_table *table)
 		if (!init_philo(table))
 			return ;
 		count ++;
-		usleep(100);
 	}
 }
 
@@ -31,7 +30,10 @@ int	init_philo(t_table *table)
 	reset_infos(&table->philos[id], table->id);
 	table->created ++;
 	if (id % 2 == 0 && id != table->params->nb_philo -1)
+	{
 		table->philos[id].start = true;
+		printf("starter %d\n", table->philos[id].id);
+	}
 	if (pthread_create(&table->philos[id].th, NULL, &set_actions, (void *) table) != 0)
 	{
 		perror("creation thread");

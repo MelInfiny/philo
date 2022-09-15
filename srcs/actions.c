@@ -14,14 +14,14 @@ void	*set_actions(void *table_tmp)
 	while (philo->alive == true)
 	{
 		if (!philo->start)
-			usleep(1000);
+			usleep(2000);
 		if (!pthread_mutex_lock(&philo->mutex) && !pthread_mutex_lock(&table->philos[prec].mutex))
 				get_meal(table, philo, prec);
-		else
-			break;
 	}
 	return (NULL);
 }
+
+void	
 
 void	get_meal(t_table *table, t_philo *philo, int prec)
 {
