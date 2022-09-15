@@ -19,10 +19,13 @@ void	*set_actions(void *table_tmp)
 		if (!pthread_mutex_lock(&philo->mutex))
 		{
 			set_infos(table, philo, 0, true);		// fork
-			if (prec != philo->id && !pthread_mutex_lock(&table->philos[prec].mutex))
+			if (prec != philo->id - 1 && !pthread_mutex_lock(&table->philos[prec].mutex))
 				get_meal(table, philo, prec);
 			else
+			{
 				pthread_mutex_unlock(&philo->mutex);
+				break;
+			}
 		}
 	}
 	return (NULL);
