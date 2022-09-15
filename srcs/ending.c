@@ -15,13 +15,23 @@ static void	check_end(t_table *table)
 	return ;
 }
 
+static size_t	get_start(t_table *table)
+{
+	size_t	min;
+
+	min = table->params->eat_time * table->params->nb_philo;
+	if (table->params->die_time < min)
+		min = table->params->die_time;
+	return (min);
+}
+
 void	*check_alive(void *table_tmp)
 {
 	t_table	*table;
 	int	count;
 
 	table = table_tmp;
-	while (table->created < table->params->nb_philo)
+	while (table->created < table->params->nb_philo || get_time(table->params->start_time) < get_start(table))
 		count = -1;
 	while (table->end == 0)
 	{
@@ -41,3 +51,4 @@ void	*check_alive(void *table_tmp)
 	check_end(table);
 	return (NULL);
 }
+
