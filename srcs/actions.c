@@ -12,7 +12,7 @@ void	*set_actions(void *table_tmp)
 	while (table->created < table->params->nb_philo)
 		prec ++;
 	prec = get_prec(table, philo);
-	while (table->end == 0)
+	while (philo->alive == true)
 	{
 		if (!philo->start)
 			usleep(1000);
@@ -30,6 +30,7 @@ void	*set_actions(void *table_tmp)
 
 void	get_meal(t_table *table, t_philo *philo, int prec)
 {
+	printf("meal time \n");
 	set_infos(table, philo, 0, true);		// fork
 	set_infos(table, philo, 0, false);
 	set_infos(table, philo, 1, true);		// eat

@@ -17,7 +17,7 @@ void	create_philos(t_table *table)
 	{
 		table->id = count;
 		if (!init_philo(table))
-			free_table(table);
+			return ;
 		count ++;
 		usleep(100);
 	}
