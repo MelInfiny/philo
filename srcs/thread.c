@@ -16,6 +16,7 @@ static void	philosophers(t_table *table)
 	printf("monitor \n");
 	//detach_philos(table);
 	pthread_join(monitor, NULL);
+	join_philos(table);
 	//pthread_detach(monitor);
 }
 

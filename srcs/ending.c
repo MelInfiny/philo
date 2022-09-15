@@ -11,6 +11,7 @@ static void	*check_end(t_table *table, int status)
 	{
 		printf("%ld ms : %d is died\n", get_time(table->params->start_time), table->end);
 	}
+	kill_all_philos(table);
 	return (NULL);
 }
 
@@ -29,6 +30,18 @@ static void	kill_philo(t_philo *philo)
 	philo->alive = false;
 	if (!pthread_mutex_unlock(&philo->mutex))
 		pthread_mutex_destroy(&philo->mutex);
+}
+
+void	kill_all_philos(t_table *table)
+{
+	int	count;
+
+	count = 0;
+	while (count < table->params->nb_philo)
+	{
+		table->philos[count].alive = false;
+		count ++;
+	}
 }
 
 void	*check_alive(void *table_tmp)
