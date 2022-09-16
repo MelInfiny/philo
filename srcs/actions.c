@@ -1,28 +1,39 @@
 #include "philo.h"
 
-void	*set_actions(void *table_tmp)
+void	reset_infos(t_philo *philo, int id)
 {
-	t_table	*table;
-	t_philo *philo;
-	unsigned int	prec;
-	
-	table = table_tmp;
-	philo = &table->philos[table->id];
-	prec = get_prec(table, philo);
-	if (philo->start)
-			get_meal(table, philo, prec);
-	else
-		usleep(2000);
-	while (philo->alive == true)
-	{
-		get_meal(table, philo, prec);
-		usleep(200);
-	}
-	return (NULL);
+	philo->th = 0;
+	philo->id = id + 1;
+	philo->start = false;
+	philo->fork = false;
+	philo->eat = false;
+	philo->sleep = false;
+	philo->think = false;
+	philo->alive = true;
+	philo->meals = 0;
+	philo->last_meal = 0;
+	pthread_mutex_init(&philo->mutex, NULL);
 }
 
+static void	set_infos(t_table *table, t_philo *philo, int status, bool state)
+{
+	if (status == 0)
+		philo->fork = state;
+	else if (status == 1)
+		philo->eat = state;
+	else if (status == 2)
+		philo->sleep = state;
+	else if (status == 3)
+		philo->think = state;
+	else if (status == 4)
+		philo->meals ++;
+	if (status != 3)
+		philo->think = false;
+	if (state && table->end == 0)
+		print_infos(philo, table->params->start_time);
+}
 
-void	get_meal(t_table *table, t_philo *philo, int prec)
+static void	get_meal(t_table *table, t_philo *philo, int prec)
 {
 	if (pthread_mutex_lock(&philo->mutex) || pthread_mutex_lock(&table->philos[prec].mutex))
 		return ;
@@ -45,20 +56,23 @@ void	get_meal(t_table *table, t_philo *philo, int prec)
 		table->satisfied ++;
 }
 
-void	set_infos(t_table *table, t_philo *philo, int status, bool state)
+void	*set_actions(void *table_tmp)
 {
-	if (status == 0)
-		philo->fork = state;
-	else if (status == 1)
-		philo->eat = state;
-	else if (status == 2)
-		philo->sleep = state;
-	else if (status == 3)
-		philo->think = state;
-	else if (status == 4)
-		philo->meals ++;
-	if (status != 3)
-		philo->think = false;
-	if (state && table->end == 0)
-		print_infos(philo, table->params->start_time);
+	t_table	*table;
+	t_philo *philo;
+	unsigned int	prec;
+	
+	table = table_tmp;
+	philo = &table->philos[table->id];
+	prec = get_prec(table, philo);
+	if (philo->start)
+			get_meal(table, philo, prec);
+	else
+		usleep(2000);
+	while (philo->alive == true)
+	{
+		get_meal(table, philo, prec);
+		usleep(200);
+	}
+	return (NULL);
 }

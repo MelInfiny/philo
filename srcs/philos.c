@@ -2,6 +2,28 @@
 
 void	create_philos(t_table *table)
 {
+	int	count;
+
+	count = 0;
+	table->philos = (t_philo *) calloc(table->params->nb_philo, sizeof(t_philo));
+	if (!table->philos)
+	{
+		perror("Allocation philos ");
+		free(table->params);
+		free(table);
+		exit(1);
+	}
+	while (count < table->params->nb_philo)
+	{
+		reset_infos(&table->philos[count], count);
+		if (count % 2 == 0 && count != table->params->nb_philo -1)
+			table->philos[count].start = true;
+		count ++;
+	}
+}
+
+void	init_philos(t_table *table)
+{
 	int		count;
 
 	count = 0;
@@ -9,24 +31,13 @@ void	create_philos(t_table *table)
 	while (count < table->params->nb_philo)
 	{
 		table->id = count;
-		if (!init_philo(table))
-			return ;
+		if (pthread_create(&table->philos[count].th, NULL, &set_actions, (void *) table) != 0)
+		{
+			return (error_philo(table, "cretation thread "));
+		}
 		usleep(200);
 		count ++;
 	}
-}
-
-int	init_philo(t_table *table)
-{
-	int	id;
-
-	id = table->id;
-	if (pthread_create(&table->philos[id].th, NULL, &set_actions, (void *) table) != 0)
-	{
-		perror("creation thread");
-		return (0);
-	}
-	return (1);
 }
 
 void	join_philos(t_table *table)
@@ -38,7 +49,7 @@ void	join_philos(t_table *table)
 	{
 		if (pthread_join(table->philos[count].th, NULL))
 		{
-			perror("join thread");
+			error_philo(table, "join thread ");
 			return ;
 		}
 		count ++;
@@ -56,19 +67,4 @@ int	get_prec(t_table *table, t_philo *philo)
 	else
 		prec = id - 1;
 	return (prec);
-}
-
-void	reset_infos(t_philo *philo, int id)
-{
-	philo->th = 0;
-	philo->id = id + 1;
-	philo->start = false;
-	philo->fork = false;
-	philo->eat = false;
-	philo->sleep = false;
-	philo->think = false;
-	philo->alive = true;
-	philo->meals = 0;
-	philo->last_meal = 0;
-	pthread_mutex_init(&philo->mutex, NULL);
 }

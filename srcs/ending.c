@@ -1,38 +1,34 @@
 #include "philo.h"
 
-static void	*check_end(t_table *table, int status)
+static void	free_mutex(t_table *table)
 {
-	table->end = status;
-	if (table->end == -1)
+	int	count;
+
+	count = 0;
+	while (count < table->params->nb_philo)
 	{
-		printf("END : Each philosoph is satisfied\n");
+		if (!pthread_mutex_unlock(&table->philos[count].mutex)) 
+			pthread_mutex_destroy(&table->philos[count].mutex);
+		count ++;
 	}
-	if (table->end > 0)
-	{
-		printf("%ld ms : %d is died\n", get_time(table->params->start_time), table->end);
-	}
-	kill_all_philos(table);
-	return (NULL);
 }
 
-static size_t	get_start(t_table *table)
+void	free_table(t_table *table)
 {
-	size_t	min;
-
-	min = table->params->eat_time * table->params->nb_philo;
-	if (table->params->die_time < min)
-		min = table->params->die_time;
-	return (min);
+	free_mutex(table);
+	free(table->philos);
+	free(table->params);
+	free(table);
 }
 
- void	kill_philo(t_philo *philo)
+void	error_philo(t_table *table, char *msg)
 {
-	philo->alive = false;
-	if (!pthread_mutex_unlock(&philo->mutex))
-		pthread_mutex_destroy(&philo->mutex);
+	perror(msg);
+	kill_philos(table);
+	return ;
 }
 
-void	kill_all_philos(t_table *table)
+void	kill_philos(t_table *table)
 {
 	int	count;
 
@@ -44,29 +40,9 @@ void	kill_all_philos(t_table *table)
 	}
 }
 
-void	*check_alive(void *table_tmp)
+void	kill_philo(t_philo *philo)
 {
-	t_table	*table;
-	int	count;
-
-	table = table_tmp;
-	count = -1;
-	usleep(get_start(table) *1000);
-	while (1)
-	{
-		if (count < table->params->nb_philo - 1)
-			count ++;
-		else
-			count = 0;
-		if (table->satisfied > 0 && table->satisfied >= table->params->nb_philo - 1)
-			return (check_end(table, -1));
-		if (table->philos[count].last_meal + table->params->die_time <= get_time(table->params->start_time) && table->philos[count].eat == false)
-		{
-			kill_philo(&table->philos[count]);
-			return (check_end(table, table->philos[count].id));
-		}
-		usleep(200);
-	}
-	return (NULL);
+	philo->alive = false;
+	if (!pthread_mutex_unlock(&philo->mutex))
+		pthread_mutex_destroy(&philo->mutex);
 }
-

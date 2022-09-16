@@ -9,13 +9,14 @@ CFLAGS		:=	-Werror -Wextra -Wall -I$(INC_FOLDER)
 LDFLAGS		:=	-fsanitize=address -g -fsanitize=leak
 
 SRCS_BASE	=	\
-			utils				\
+			libft				\
 			print				\
 			parser				\
-			thread				\
-			philos				\
 			ending				\
+			monitor				\
+			philos				\
 			actions				\
+			main				
 
 SRCS		=	$(addsuffix .c, $(addprefix $(SRCS_FOLDER)/, $(SRCS_BASE)))
 OBJS		=	$(addsuffix .o, $(addprefix $(OBJS_FOLDER)/, $(SRCS_BASE)))

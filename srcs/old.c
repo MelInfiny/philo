@@ -38,3 +38,16 @@ void	check_death(t_table *table)
 		count ++;
 	}
 }
+
+void	detach_philos(t_table *table)
+{
+	int	count;
+
+	count = 0;
+	while (count < table->params->nb_philo)
+	{
+		if (pthread_detach(table->philos[count].th) != 0)
+			perror("cannot detach thread. Possibly a zombi ");
+		count ++;
+	}
+}

@@ -53,19 +53,20 @@ void	*ft_calloc(size_t n, size_t size_of);
 unsigned long	get_start_time(void);
 unsigned long	get_time(unsigned long start);
 
-int		init_philo(t_table *table);
 int		get_prec(t_table *table, t_philo *philo);
-void	create_philos(t_table *table);
-void	join_philos(t_table *table);
-void	detach_philos(t_table *table);
-void	kill_all_philos(t_table *table);
-void	*check_alive(void *table);
 
-void	set_infos(t_table *table, t_philo *philo, int status, bool state);
-void	print_infos(t_philo *philo, unsigned long time);
-void	reset_infos(t_philo *philo, int id);
+void	create_philos(t_table *table);
+void	init_philos(t_table *table);
+void	join_philos(t_table *table);
+void	kill_philo(t_philo *philo);
+void	kill_philos(t_table *table);
+void	error_philo(t_table *table, char *msg);
+
+void	*check_alive(void *table);
 void	*set_actions(void *table);
 
-void	get_meal(t_table *table, t_philo *philo, int prec);
-//int	is_available(t_table *table, t_philo *philo);
+void	print_infos(t_philo *philo, unsigned long time);
+void	reset_infos(t_philo *philo, int id);
+
+
 #endif
