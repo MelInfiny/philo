@@ -31,7 +31,8 @@ static void	philos(t_table *table)
 static void	philosophers(t_table *table)
 {
 	philos(table);
-	pthread_create(&table->monitor, NULL, &check_alive, (void *) table);
+	if (pthread_create(&table->monitor, NULL, &check_alive, (void *) table))
+		return ;
 	create_philos(table);
 	printf("monitor \n");
 	//detach_philos(table);

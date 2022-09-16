@@ -8,8 +8,6 @@ void	*set_actions(void *table_tmp)
 	
 	table = table_tmp;
 	philo = &table->philos[table->id];
-	while (table->created < table->params->nb_philo)
-		prec ++;
 	prec = get_prec(table, philo);
 	while (philo->alive == true)
 	{

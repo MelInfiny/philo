@@ -27,7 +27,7 @@ int	init_philo(t_table *table)
 	int	id;
 
 	id = table->id;
-	reset_infos(&table->philos[id], table->id);
+	//reset_infos(&table->philos[id], table->id);
 	table->created ++;
 	if (id % 2 == 0 && id != table->params->nb_philo -1)
 	{
