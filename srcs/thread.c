@@ -42,10 +42,8 @@ static void	philosophers(t_table *table)
 	}
 	create_philos(table);
 	printf("monitor \n");
-	//detach_philos(table);
 	pthread_join(table->monitor, NULL);
 	join_philos(table);
-	//pthread_detach(monitor);
 }
 
 int	main(int ac, char **argv)

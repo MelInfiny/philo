@@ -37,7 +37,6 @@ typedef struct s_table {
 	t_param		*params;
 	t_philo		*philos;
 	int		satisfied;
-	int		created;
 	int		id;
 	int		end;
 }			t_table;

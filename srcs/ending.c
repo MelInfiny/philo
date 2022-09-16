@@ -51,9 +51,6 @@ void	*check_alive(void *table_tmp)
 
 	table = table_tmp;
 	count = -1;
-	/*
-	while (table->created < table->params->nb_philo || get_time(table->params->start_time) < get_start(table))
-		*/
 	usleep(get_start(table) *1000);
 	while (1)
 	{

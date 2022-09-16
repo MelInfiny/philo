@@ -21,14 +21,6 @@ int	init_philo(t_table *table)
 	int	id;
 
 	id = table->id;
-	//table->created ++;
-	/*
-	if (id % 2 == 0 && id != table->params->nb_philo -1)
-	{
-		table->philos[id].start = true;
-		printf("starter %d\n", table->philos[id].id);
-	}*/
-	printf("is created %d\n", table->id);
 	if (pthread_create(&table->philos[id].th, NULL, &set_actions, (void *) table) != 0)
 	{
 		perror("creation thread");
