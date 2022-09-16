@@ -12,6 +12,9 @@ static void	init_table(t_table *table, t_param *params)
 
 static void	philos(t_table *table)
 {
+	int	count;
+
+	count = 0;
 	table->philos = (t_philo *) calloc(table->params->nb_philo, sizeof(t_philo));
 	if (!table->philos)
 	{
@@ -20,19 +23,23 @@ static void	philos(t_table *table)
 		free(table);
 		exit(1);
 	}
-	while (table->id < table->params->nb_philo)
+	while (count < table->params->nb_philo)
 	{
-		reset_infos(&table->philos[table->id], table->id);
-		table->id ++;
+		reset_infos(&table->philos[count], count);
+		if (count % 2 == 0 && count != table->params->nb_philo -1)
+			table->philos[count].start = true;
+		count ++;
 	}
-	table->id = 0;
 }
 
 static void	philosophers(t_table *table)
 {
 	philos(table);
 	if (pthread_create(&table->monitor, NULL, &check_alive, (void *) table))
-		return ;
+	{
+		free_table(table);
+		exit(1) ;
+	}
 	create_philos(table);
 	printf("monitor \n");
 	//detach_philos(table);

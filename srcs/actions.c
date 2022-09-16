@@ -9,12 +9,14 @@ void	*set_actions(void *table_tmp)
 	table = table_tmp;
 	philo = &table->philos[table->id];
 	prec = get_prec(table, philo);
+	if (philo->start)
+			get_meal(table, philo, prec);
+	else
+		usleep(2000);
 	while (philo->alive == true)
 	{
-		if (!philo->start)
-			usleep(2000);
-		if (!pthread_mutex_lock(&philo->mutex) && !pthread_mutex_lock(&table->philos[prec].mutex))
-				get_meal(table, philo, prec);
+		get_meal(table, philo, prec);
+		usleep(200);
 	}
 	return (NULL);
 }
@@ -22,6 +24,8 @@ void	*set_actions(void *table_tmp)
 
 void	get_meal(t_table *table, t_philo *philo, int prec)
 {
+	if (pthread_mutex_lock(&philo->mutex) || pthread_mutex_lock(&table->philos[prec].mutex))
+		return ;
 	set_infos(table, philo, 0, true);		// fork
 	set_infos(table, philo, 0, true);		// fork
 	set_infos(table, philo, 0, false);

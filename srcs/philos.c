@@ -3,14 +3,7 @@
 void	create_philos(t_table *table)
 {
 	int		count;
-/*
-	table->philos = (t_philo *) calloc(table->params->nb_philo, sizeof(t_philo));
-	if (!table->philos)
-	{
-		perror("allocation philos");
-		free_table(table);
-	}
-	*/
+
 	count = 0;
 	table->params->start_time = get_start_time();
 	while (count < table->params->nb_philo)
@@ -18,6 +11,7 @@ void	create_philos(t_table *table)
 		table->id = count;
 		if (!init_philo(table))
 			return ;
+		usleep(200);
 		count ++;
 	}
 }
@@ -27,13 +21,14 @@ int	init_philo(t_table *table)
 	int	id;
 
 	id = table->id;
-	//reset_infos(&table->philos[id], table->id);
-	table->created ++;
+	//table->created ++;
+	/*
 	if (id % 2 == 0 && id != table->params->nb_philo -1)
 	{
 		table->philos[id].start = true;
 		printf("starter %d\n", table->philos[id].id);
-	}
+	}*/
+	printf("is created %d\n", table->id);
 	if (pthread_create(&table->philos[id].th, NULL, &set_actions, (void *) table) != 0)
 	{
 		perror("creation thread");
@@ -73,8 +68,8 @@ int	get_prec(t_table *table, t_philo *philo)
 
 void	reset_infos(t_philo *philo, int id)
 {
-	philo->id = id + 1;
 	philo->th = 0;
+	philo->id = id + 1;
 	philo->start = false;
 	philo->fork = false;
 	philo->eat = false;

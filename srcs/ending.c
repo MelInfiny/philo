@@ -14,7 +14,7 @@ static void	*check_end(t_table *table, int status)
 	kill_all_philos(table);
 	return (NULL);
 }
-/*
+
 static size_t	get_start(t_table *table)
 {
 	size_t	min;
@@ -24,7 +24,7 @@ static size_t	get_start(t_table *table)
 		min = table->params->die_time;
 	return (min);
 }
-*/
+
  void	kill_philo(t_philo *philo)
 {
 	philo->alive = false;
@@ -54,6 +54,7 @@ void	*check_alive(void *table_tmp)
 	/*
 	while (table->created < table->params->nb_philo || get_time(table->params->start_time) < get_start(table))
 		*/
+	usleep(get_start(table) *1000);
 	while (1)
 	{
 		if (count < table->params->nb_philo - 1)
