@@ -63,7 +63,7 @@ void	*check_alive(void *table_tmp)
 			return (check_end(table, -1));
 		if (table->philos[count].last_meal + table->params->die_time <= get_time(table->params->start_time) && table->philos[count].eat == false)
 		{
-			//kill_philo(&table->philos[count]);
+			kill_philo(&table->philos[count]);
 			return (check_end(table, table->philos[count].id));
 		}
 		usleep(200);
