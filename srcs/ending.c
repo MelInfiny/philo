@@ -25,7 +25,7 @@ static size_t	get_start(t_table *table)
 	return (min);
 }
 
-static void	kill_philo(t_philo *philo)
+ void	kill_philo(t_philo *philo)
 {
 	philo->alive = false;
 	if (!pthread_mutex_unlock(&philo->mutex))
@@ -63,7 +63,7 @@ void	*check_alive(void *table_tmp)
 			return (check_end(table, -1));
 		if (table->philos[count].last_meal + table->params->die_time <= get_time(table->params->start_time) && table->philos[count].eat == false)
 		{
-			kill_philo(&table->philos[count]);
+			//kill_philo(&table->philos[count]);
 			return (check_end(table, table->philos[count].id));
 		}
 		usleep(200);

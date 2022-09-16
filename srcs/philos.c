@@ -74,6 +74,7 @@ int	get_prec(t_table *table, t_philo *philo)
 void	reset_infos(t_philo *philo, int id)
 {
 	philo->id = id + 1;
+	philo->th = 0;
 	philo->start = false;
 	philo->fork = false;
 	philo->eat = false;

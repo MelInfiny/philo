@@ -33,12 +33,13 @@ typedef	struct s_philo {
 }			t_philo;
 
 typedef struct s_table {
+	pthread_t	monitor;
 	t_param		*params;
 	t_philo		*philos;
 	int		satisfied;
+	int		created;
 	int		id;
 	int		end;
-	int		created;
 }			t_table;
 
 // ***************** PARSING ********************

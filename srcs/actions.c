@@ -21,7 +21,6 @@ void	*set_actions(void *table_tmp)
 	return (NULL);
 }
 
-void	
 
 void	get_meal(t_table *table, t_philo *philo, int prec)
 {
