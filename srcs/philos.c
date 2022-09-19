@@ -16,6 +16,7 @@ void	create_philos(t_table *table)
 	while (count < table->params->nb_philo)
 	{
 		reset_infos(&table->philos[count], count);
+		table->philos[count].pprint = &table->print;
 		if (count % 2 == 0 && count != table->params->nb_philo -1)
 			table->philos[count].start = true;
 		count ++;

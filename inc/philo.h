@@ -21,6 +21,7 @@ typedef struct s_param {
 typedef	struct s_philo {
 	pthread_t		th;
 	pthread_mutex_t		mutex;
+	pthread_mutex_t		*pprint;
 	bool			start;
 	bool			fork;
 	bool			eat;
@@ -32,7 +33,8 @@ typedef	struct s_philo {
 	unsigned long		last_meal;
 }			t_philo;
 
-typedef struct s_table {
+typedef struct s_table {		
+	pthread_mutex_t	print;
 	pthread_t	monitor;
 	t_param		*params;
 	t_philo		*philos;
@@ -40,6 +42,7 @@ typedef struct s_table {
 	int		id;
 	int		end;
 }			t_table;
+
 
 // ***************** PARSING ********************
 // **********************************************
@@ -54,6 +57,7 @@ unsigned long	get_start_time(void);
 unsigned long	get_time(unsigned long start);
 
 int		get_prec(t_table *table, t_philo *philo);
+int		get_fork(t_table *table, t_philo *philo, int prec);
 
 void	create_philos(t_table *table);
 void	init_philos(t_table *table);

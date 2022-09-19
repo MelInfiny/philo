@@ -7,10 +7,10 @@ static void	free_mutex(t_table *table)
 	count = 0;
 	while (count < table->params->nb_philo)
 	{
-		if (!pthread_mutex_unlock(&table->philos[count].mutex)) 
-			pthread_mutex_destroy(&table->philos[count].mutex);
+		pthread_mutex_destroy(&table->philos[count].mutex);
 		count ++;
 	}
+	pthread_mutex_destroy(&table->print);
 }
 
 void	free_table(t_table *table)
@@ -43,6 +43,6 @@ void	kill_philos(t_table *table)
 void	kill_philo(t_philo *philo)
 {
 	philo->alive = false;
-	if (!pthread_mutex_unlock(&philo->mutex))
-		pthread_mutex_destroy(&philo->mutex);
+//	if (!pthread_mutex_unlock(&philo->mutex))
+//		pthread_mutex_destroy(&philo->mutex);
 }
