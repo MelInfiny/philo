@@ -42,11 +42,13 @@ static void	get_meal(t_table *table, t_philo *philo, int prec)
 	set_infos(table, philo, 1, true);		// eat
 	philo->last_meal = get_time(table->params->start_time); //	die when he eats
 	usleep(table->params->eat_time * 1000);	
-	printf("unlock 1 %d\n", pthread_mutex_unlock(&philo->mutex));
-	printf("unlock 2 %d\n", pthread_mutex_unlock(&table->philos[prec].mutex));
+	pthread_mutex_unlock(&philo->mutex);
+	pthread_mutex_unlock(&table->philos[prec].mutex);
+	//printf("unlock 2 %d\n", pthread_mutex_unlock(&table->philos[prec].mutex));
 
 	set_infos(table, philo, 1, false);
 	set_infos(table, philo, 2, true);		// sleep
+	set_infos(table, &table->philos[prec], 0, false);
 	set_infos(table, philo, 4, false);		// last meal
 	usleep(table->params->sleep_time * 1000);
 	set_infos(table, philo, 2, false);
@@ -67,7 +69,8 @@ int	get_fork(t_table *table, t_philo *philo, int prec)
 		left = pthread_mutex_lock(&table->philos[prec].mutex);
 	if (!own)
 	{
-		set_infos(table, &table->philos[prec], 0, true);
+		set_infos(table, philo, 0, true);		// fork
+		table->philos[prec].fork = true;
 		{
 			if (left == 0)
 				return (1);
@@ -88,8 +91,9 @@ void	*set_actions(void *table_tmp)
 	table = table_tmp;
 	philo = &table->philos[table->id];
 	prec = get_prec(table, philo);
-	if (philo->start)
-			get_meal(table, philo, prec);
+	if (!philo->start)
+		usleep(1500);
+			//get_meal(table, philo, prec);
 	while (philo->alive == true)
 	{
 		usleep(200);
