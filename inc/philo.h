@@ -71,6 +71,7 @@ void	*set_actions(void *table);
 
 void	print_infos(t_philo *philo, unsigned long time);
 void	reset_infos(t_philo *philo, int id);
+void	set_infos(t_table *table, t_philo *philo, int status, bool state);
 
 
 #endif

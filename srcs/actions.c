@@ -15,7 +15,7 @@ void	reset_infos(t_philo *philo, int id)
 	pthread_mutex_init(&philo->mutex, NULL);
 }
 
-static void	set_infos(t_table *table, t_philo *philo, int status, bool state)
+void	set_infos(t_table *table, t_philo *philo, int status, bool state)
 {
 	if (status == 0)
 		philo->fork = state;
@@ -29,7 +29,8 @@ static void	set_infos(t_table *table, t_philo *philo, int status, bool state)
 		philo->meals ++;
 	if (status != 3)
 		philo->think = false;
-	if (state && table->end == 0)
+	printf("tabkle end = %d\n", table->end);
+	if (table->end == 0 && state)
 		print_infos(philo, table->params->start_time);
 }
 
@@ -37,17 +38,14 @@ static void	get_meal(t_table *table, t_philo *philo, int prec)
 {
 	if (get_fork(table, philo, prec) == 0)
 		return ;
-	set_infos(table, philo, 0, true);		// fork
 	set_infos(table, philo, 0, false);
 	set_infos(table, philo, 1, true);		// eat
 	philo->last_meal = get_time(table->params->start_time); //	die when he eats
 	usleep(table->params->eat_time * 1000);	
-	pthread_mutex_unlock(&philo->mutex);
-	pthread_mutex_unlock(&table->philos[prec].mutex);
-	//printf("unlock 2 %d\n", pthread_mutex_unlock(&table->philos[prec].mutex));
-
 	set_infos(table, philo, 1, false);
 	set_infos(table, philo, 2, true);		// sleep
+	pthread_mutex_unlock(&philo->mutex);
+	pthread_mutex_unlock(&table->philos[prec].mutex);
 	set_infos(table, &table->philos[prec], 0, false);
 	set_infos(table, philo, 4, false);		// last meal
 	usleep(table->params->sleep_time * 1000);
@@ -65,19 +63,21 @@ int	get_fork(t_table *table, t_philo *philo, int prec)
 	if (philo->fork == true)
 		return (0);
 	own = pthread_mutex_lock(&philo->mutex);
-	if (table->philos[prec].id != philo->id)
-		left = pthread_mutex_lock(&table->philos[prec].mutex);
+	left = pthread_mutex_lock(&table->philos[prec].mutex);
 	if (!own)
 	{
-		set_infos(table, philo, 0, true);		// fork
 		table->philos[prec].fork = true;
+		set_infos(table, philo, 0, true);		// fork
 		{
-			if (left == 0)
+			if (!left)
+			{
+				set_infos(table, philo, 0, true);		// fork
 				return (1);
+			}
 		}
 		pthread_mutex_unlock(&philo->mutex);
 	}
-	if (!left)	
+	if (!left)
 		pthread_mutex_unlock(&table->philos[prec].mutex);
 	return (0);
 }
@@ -91,13 +91,17 @@ void	*set_actions(void *table_tmp)
 	table = table_tmp;
 	philo = &table->philos[table->id];
 	prec = get_prec(table, philo);
+	if (table->philos[prec].id == philo->id)
+	{
+		set_infos(table, philo, 0, true);
+		return (NULL);
+	}
 	if (!philo->start)
 		usleep(1500);
-			//get_meal(table, philo, prec);
 	while (philo->alive == true)
 	{
-		usleep(200);
 		get_meal(table, philo, prec);
+		usleep(100);
 	}
 	return (NULL);
 }

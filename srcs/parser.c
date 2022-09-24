@@ -1,6 +1,6 @@
 #include "philo.h"
 
-static void	print_params(t_param *params)
+void	print_params(t_param *params)
 {
 	printf("nb_philosophers : %d\n", params->nb_philo);
 	printf("time_to_eat : %d\n", params->eat_time);
@@ -87,6 +87,6 @@ t_param	*ft_parser(int ac, char **argv)
 		params->max_meals = check_int(argv[5], params);
 	else	
 		params->max_meals = 0;
-	print_params(params);
+//	print_params(params);
 	return (params);
 }
