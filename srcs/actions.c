@@ -29,7 +29,6 @@ void	set_infos(t_table *table, t_philo *philo, int status, bool state)
 		philo->meals ++;
 	if (status != 3)
 		philo->think = false;
-	printf("tabkle end = %d\n", table->end);
 	if (table->end == 0 && state)
 		print_infos(philo, table->params->start_time);
 }
