@@ -58,6 +58,12 @@ unsigned long	get_time(unsigned long start);
 
 int		get_prec(t_table *table, t_philo *philo);
 int		get_fork(t_table *table, t_philo *philo, int prec);
+int		get_last_meal(t_table *table, t_philo *philo, int status);
+int		get_eat(t_philo *philo, int status);
+int		set_fork(t_philo *philo, int status);
+int		get_end(t_philo *philo, int status);
+int		get_alive(t_philo *philo, int status);
+int		get_satisfied(t_philo *philo, int status);
 
 void	create_philos(t_table *table);
 void	init_philos(t_table *table);
