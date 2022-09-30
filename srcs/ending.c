@@ -35,14 +35,16 @@ void	kill_philos(t_table *table)
 	count = 0;
 	while (count < table->params->nb_philo)
 	{
-		table->philos[count].alive = false;
+		get_alive(&table->philos[count], 0);
+		//table->philos[count].alive = false;
 		count ++;
 	}
 }
 
 void	kill_philo(t_philo *philo)
 {
-	philo->alive = false;
+	get_alive(philo, 0);
+	//philo->alive = false;
 //	if (!pthread_mutex_unlock(&philo->mutex))
 //		pthread_mutex_destroy(&philo->mutex);
 }

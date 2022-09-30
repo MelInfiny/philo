@@ -12,6 +12,7 @@ SRCS_BASE	=	\
 			libft				\
 			print				\
 			parser				\
+			getters				\
 			ending				\
 			monitor				\
 			philos				\
