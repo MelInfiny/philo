@@ -19,8 +19,7 @@ void	reset_infos(t_philo *philo, int id)
 
 void	set_infos(t_table *table, t_philo *philo, int status, bool state)
 {
-	if (pthread_mutex_lock(philo->pprint))
-		return ;
+	pthread_mutex_lock(philo->pprint);
 	if (status == 0)
 		philo->fork = state;
 	else if (status == 1)
@@ -32,9 +31,9 @@ void	set_infos(t_table *table, t_philo *philo, int status, bool state)
 	if (status != 3)
 		philo->think = false;
 	status = table->end;
-	pthread_mutex_unlock(philo->pprint);
 	if (status == 0 && state)
 		print_infos(philo, table->params->start_time);
+	pthread_mutex_unlock(philo->pprint);
 }
 
 static void	get_meal(t_table *table, t_philo *philo, int prec)
@@ -99,7 +98,10 @@ void	*set_actions(void *table_tmp)
 	prec = get_prec(table, philo);
 	if (table->philos[prec].id == philo->id)
 	{
+		printf("equals\n");
 		set_infos(table, philo, 0, true);
+		usleep(table->params->die_time);
+		//get_alive(philo, 0);
 		return (NULL);
 	}
 	if (!philo->start)

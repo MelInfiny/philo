@@ -26,8 +26,6 @@ unsigned long	get_time(unsigned long start)
 
 void	print_infos(t_philo *philo, unsigned long time)
 {
-	if (pthread_mutex_lock(philo->pprint))
-			return;
 	if (philo->sleep)
 		printf("%ld ms : %d is sleeping\n", get_time(time), philo->id);
 	else if (philo->eat)
@@ -36,6 +34,5 @@ void	print_infos(t_philo *philo, unsigned long time)
 		printf("%ld ms : %d is thinking\n", get_time(time), philo->id);
 	else if (philo->fork)
 		printf("%ld ms : %d has taken a fork\n", get_time(time), philo->id);
-	pthread_mutex_unlock(philo->pprint);
 }
 

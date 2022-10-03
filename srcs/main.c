@@ -18,10 +18,7 @@ static void	philosophers(t_table *table)
 		free_table(table);
 		exit(1) ;
 	}
-	if (table->params->nb_philo == 1)
-		set_infos(table, &table->philos[0], 0, true);
-	else
-		init_philos(table);
+	init_philos(table);
 	pthread_join(table->monitor, NULL);
 	join_philos(table);
 }
