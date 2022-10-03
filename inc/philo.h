@@ -65,6 +65,7 @@ int		get_eat(t_philo *philo, int status);
 int		set_meal(t_philo *philo, int status);
 int		set_fork(t_philo *philo, int status);
 int		get_alive(t_philo *philo, int status);
+int		get_id(t_table *table, int status);
 
 void	create_philos(t_table *table);
 void	init_philos(t_table *table);

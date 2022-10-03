@@ -31,7 +31,7 @@ void	init_philos(t_table *table)
 	table->params->start_time = get_start_time();
 	while (count < table->params->nb_philo)
 	{
-		table->id = count;
+		get_id(table, count);
 		if (pthread_create(&table->philos[count].th, NULL, &set_actions, (void *) table) != 0)
 		{
 			return (error_philo(table, "cretation thread "));

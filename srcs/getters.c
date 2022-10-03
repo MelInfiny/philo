@@ -4,8 +4,8 @@ int	get_eat(t_philo *philo, int status)
 {
 	int	res;
 
-	res = philo->eat;
 	pthread_mutex_lock(philo->pprint);
+	res = philo->eat;
 	if (status == 1)
 		philo->eat = true;
 	else if (status == 0)
@@ -18,11 +18,11 @@ int	get_end(t_table *table, t_philo *philo, int status)
 {
 	int	res;
 
-	res = table->end;
 	if (philo == NULL)
 		pthread_mutex_lock(&table->print);
 	else
 		pthread_mutex_lock(philo->pprint);
+	res = table->end;
 	table->end = status;
 	if (status == -1)
 		printf("END : Each philosoph ils satisfied\n");
@@ -36,8 +36,8 @@ int	get_alive(t_philo *philo, int status)
 {
 	int	res;
 
-	res = philo->alive;
 	pthread_mutex_lock(philo->pprint);
+	res = philo->alive;
 	if (status == 1)
 		philo->alive = true;
 	else if (status == 0)
@@ -50,11 +50,11 @@ int	get_satisfied(t_table *table, t_philo *philo, int status)
 {
 	int	res;
 
-	res = table->satisfied;
 	if (philo == NULL)
 		pthread_mutex_lock(&table->print);
 	else
 		pthread_mutex_lock(philo->pprint);
+	res = table->satisfied;
 	if (status == 1)
 		table->satisfied ++;
 	pthread_mutex_unlock(&table->print);
@@ -65,8 +65,8 @@ int	get_last_meal(t_table *table, t_philo *philo, int status)
 {
 	int	res;
 
-	res = philo->last_meal;
 	pthread_mutex_lock(philo->pprint);
+	res = philo->last_meal;
 	if (status == 1)
 		philo->last_meal = get_time(table->params->start_time);
 	pthread_mutex_unlock(philo->pprint);
@@ -89,12 +89,24 @@ int	set_fork(t_philo *philo, int status)
 {	
 	int	res;
 
-	res = philo->fork;
 	pthread_mutex_lock(philo->pprint);
+	res = philo->fork;
 	if (status == 1)
 		philo->fork = true;
 	else if (status == 0)
 		philo->fork = false;
 	pthread_mutex_unlock(philo->pprint);
+	return (res);
+}
+
+int	get_id(t_table *table, int status)
+{
+	int	res;
+	
+	pthread_mutex_lock(&table->print);
+	res = table->id;
+	if (status > 0)
+		table->id = status;
+	pthread_mutex_unlock(&table->print);
 	return (res);
 }

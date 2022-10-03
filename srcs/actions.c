@@ -94,14 +94,12 @@ void	*set_actions(void *table_tmp)
 	unsigned int	prec;
 	
 	table = table_tmp;
-	philo = &table->philos[table->id];
+	philo = &table->philos[get_id(table, 0)];
 	prec = get_prec(table, philo);
-	if (table->philos[prec].id == philo->id)
+	if (prec == philo->id)
 	{
-		printf("equals\n");
 		set_infos(table, philo, 0, true);
 		usleep(table->params->die_time);
-		//get_alive(philo, 0);
 		return (NULL);
 	}
 	if (!philo->start)
