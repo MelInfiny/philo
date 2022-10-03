@@ -21,6 +21,7 @@ typedef struct s_param {
 typedef	struct s_philo {
 	pthread_t		th;
 	pthread_mutex_t		mutex;
+	pthread_mutex_t		*next;
 	pthread_mutex_t		*pprint;
 	bool			start;
 	bool			fork;
@@ -69,6 +70,7 @@ int		get_id(t_table *table, int status);
 
 void	create_philos(t_table *table);
 void	init_philos(t_table *table);
+void	link_philos(t_table *table);
 void	join_philos(t_table *table);
 void	kill_philo(t_philo *philo);
 void	kill_philos(t_table *table);

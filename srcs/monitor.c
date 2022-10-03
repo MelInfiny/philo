@@ -36,7 +36,7 @@ void	*check_alive(void *table_tmp)
 		tmp = get_satisfied(table, NULL, 0);
 		if (tmp > 0 && tmp >= table->params->nb_philo - 1)
 			return (check_end(table, -1));
-		if (get_last_meal(table, &table->philos[count], 0) + table->params->die_time < get_time(table->params->start_time))
+		if (get_last_meal(table, &table->philos[count], 0) + table->params->die_time < get_time(table->params->start_time) && !get_eat(&table->philos[count], -1))
 		{
 			kill_philo(&table->philos[count]);
 			return (check_end(table, table->philos[count].id));

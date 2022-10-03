@@ -66,24 +66,24 @@ int	get_fork(t_table *table, t_philo *philo, int prec)
 
 	if (set_fork(philo, -1))
 		return (0);
+	set_fork(&table->philos[prec], 1);
+	set_infos(table, philo, 0, true);		// fork
 	own = pthread_mutex_lock(&philo->mutex);
-	left = pthread_mutex_lock(&table->philos[prec].mutex);
 	if (!own)
 	{
+		left = pthread_mutex_lock(&table->philos[prec].mutex);
 		//table->philos[prec].fork = true;
-		set_fork(&table->philos[prec], 1);
-		set_infos(table, philo, 0, true);		// fork
 		{
 			if (!left)
 			{
 				set_infos(table, philo, 0, true);		// fork
 				return (1);
 			}
+			else
+				pthread_mutex_unlock(&table->philos[prec].mutex);
 		}
 		pthread_mutex_unlock(&philo->mutex);
 	}
-	if (!left)
-		pthread_mutex_unlock(&table->philos[prec].mutex);
 	return (0);
 }
 
@@ -96,7 +96,7 @@ void	*set_actions(void *table_tmp)
 	table = table_tmp;
 	philo = &table->philos[get_id(table, 0)];
 	prec = get_prec(table, philo);
-	if (prec == philo->id)
+	if (prec + 1 == philo->id)
 	{
 		set_infos(table, philo, 0, true);
 		usleep(table->params->die_time);
@@ -104,7 +104,7 @@ void	*set_actions(void *table_tmp)
 	}
 	if (!philo->start)
 		usleep(1500);
-	while (philo->alive == true)
+	while (get_alive(philo, 2))
 	{
 		get_meal(table, philo, prec);
 		usleep(100);
