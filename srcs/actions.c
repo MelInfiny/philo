@@ -72,15 +72,12 @@ int	get_fork(t_table *table, t_philo *philo, int prec)
 	if (!own)
 	{
 		left = pthread_mutex_lock(&table->philos[prec].mutex);
-		//table->philos[prec].fork = true;
 		{
 			if (!left)
 			{
 				set_infos(table, philo, 0, true);		// fork
 				return (1);
 			}
-			else
-				pthread_mutex_unlock(&table->philos[prec].mutex);
 		}
 		pthread_mutex_unlock(&philo->mutex);
 	}
