@@ -21,7 +21,6 @@ void	create_philos(t_table *table)
 			table->philos[count].start = true;
 		count ++;
 	}
-	link_philos(table);
 }
 
 void	init_philos(t_table *table)
@@ -70,7 +69,7 @@ int	get_prec(t_table *table, t_philo *philo)
 		prec = id - 1;
 	return (prec);
 }
-
+/*
 void	link_philos(t_table *table)
 {
 	int	count;
@@ -83,4 +82,4 @@ void	link_philos(t_table *table)
 		table->philos[count].next = &table->philos[prec].mutex;
 		count ++;
 	}
-}
+}*/

@@ -48,8 +48,8 @@ static void	get_meal(t_table *table, t_philo *philo, int prec)
 	usleep(table->params->eat_time * 1000);	
 	set_infos(table, philo, 1, false);
 	set_infos(table, philo, 2, true);		// sleep
-	pthread_mutex_unlock(&philo->mutex);
-	pthread_mutex_unlock(&table->philos[prec].mutex);
+	//pthread_mutex_unlock(&philo->mutex);
+	//pthread_mutex_unlock(&table->philos[prec].mutex);
 	set_infos(table, &table->philos[prec], 0, false);
 	meals = set_meal(philo, 1) + 1;
 	usleep(table->params->sleep_time * 1000);
@@ -61,14 +61,12 @@ static void	get_meal(t_table *table, t_philo *philo, int prec)
 
 int	get_fork(t_table *table, t_philo *philo, int prec)
 {
-	int	left;
-	int	own;
 
 	if (set_fork(philo, -1))
 		return (0);
 	set_fork(&table->philos[prec], 1);
 	set_infos(table, philo, 0, true);		// fork
-	own = pthread_mutex_lock(&philo->mutex);
+	/*own = pthread_mutex_lock(&philo->mutex);
 	if (!own)
 	{
 		left = pthread_mutex_lock(&table->philos[prec].mutex);
@@ -81,7 +79,8 @@ int	get_fork(t_table *table, t_philo *philo, int prec)
 		}
 		pthread_mutex_unlock(&philo->mutex);
 	}
-	return (0);
+	*/
+	return (1);
 }
 
 void	*set_actions(void *table_tmp)
