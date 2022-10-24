@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 23:21:51 by enolbas           #+#    #+#             */
+/*   Updated: 2022/10/24 23:21:52 by enolbas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static void	init_table(t_table *table, t_param *params)
@@ -16,7 +28,7 @@ static void	philosophers(t_table *table)
 	if (pthread_create(&table->monitor, NULL, &check_alive, (void *) table))
 	{
 		free_table(table);
-		exit(1) ;
+		exit(1);
 	}
 	init_philos(table);
 	pthread_join(table->monitor, NULL);

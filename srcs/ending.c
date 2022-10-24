@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ending.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 23:21:43 by enolbas           #+#    #+#             */
+/*   Updated: 2022/10/24 23:21:44 by enolbas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static void	free_mutex(t_table *table)
@@ -36,7 +48,6 @@ void	kill_philos(t_table *table)
 	while (count < table->params->nb_philo)
 	{
 		get_alive(&table->philos[count], 0);
-		//table->philos[count].alive = false;
 		count ++;
 	}
 }
@@ -44,7 +55,4 @@ void	kill_philos(t_table *table)
 void	kill_philo(t_philo *philo)
 {
 	get_alive(philo, 0);
-	//philo->alive = false;
-//	if (!pthread_mutex_unlock(&philo->mutex))
-//		pthread_mutex_destroy(&philo->mutex);
 }

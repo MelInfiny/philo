@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   getters.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 23:21:46 by enolbas           #+#    #+#             */
+/*   Updated: 2022/10/24 23:24:49 by enolbas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	get_eat(t_philo *philo, int status)
@@ -27,7 +39,8 @@ int	get_end(t_table *table, t_philo *philo, int status)
 	if (status == -1)
 		printf("END : Each philosoph ils satisfied\n");
 	else if (status > 0)
-		printf("%ld ms : %d is died\n", get_time(table->params->start_time),table->end);
+		printf("%ld ms : %d is died\n",
+			get_time(table->params->start_time), table->end);
 	pthread_mutex_unlock(&table->print);
 	return (res);
 }
@@ -102,7 +115,7 @@ int	set_fork(t_philo *philo, int status)
 int	get_id(t_table *table, int status)
 {
 	int	res;
-	
+
 	pthread_mutex_lock(&table->print);
 	res = table->id;
 	if (status > 0)

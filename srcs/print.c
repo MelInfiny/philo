@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 23:22:07 by enolbas           #+#    #+#             */
+/*   Updated: 2022/10/24 23:22:08 by enolbas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-unsigned long	get_start_time()
+unsigned long	get_start_time(void)
 {
 	struct timeval	time;
 	unsigned long	mstime;
@@ -35,4 +47,3 @@ void	print_infos(t_philo *philo, unsigned long time)
 	else if (philo->fork)
 		printf("%ld ms : %d has taken a fork\n", get_time(time), philo->id);
 }
-

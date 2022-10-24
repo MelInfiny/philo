@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 23:21:58 by enolbas           #+#    #+#             */
+/*   Updated: 2022/10/24 23:24:05 by enolbas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	print_params(t_param *params)
@@ -18,7 +30,7 @@ static void	error_parsing(int error, t_param *params)
 		ft_putstr_fd(2, ": Invalid format of arguments\n");
 	if (error == 3)
 		ft_putstr_fd(2, ": Cannot launch simulation with parameters <= 0\n");
-	ft_putstr_fd(2, "usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep number_of_times_each_philosopher_must_eat\n");
+	ft_putstr_fd(2, ": Bad input parameters\n");
 	free(params);
 	exit(1);
 }
@@ -43,7 +55,7 @@ static int	ft_atoi(char *s, int *sign)
 	{
 		num = (num * 10) + s[count] - 48;
 		if (num * *sign > 2147483647 || num * *sign < -2147483648
-				|| s[count] < '0' || s[count] > '9') 
+			|| s[count] < '0' || s[count] > '9')
 			*sign = 0;
 		count++;
 	}
@@ -85,8 +97,7 @@ t_param	*ft_parser(int ac, char **argv)
 	params->sleep_time = check_int(argv[4], params);
 	if (ac == 6)
 		params->max_meals = check_int(argv[5], params);
-	else	
+	else
 		params->max_meals = 0;
-//	print_params(params);
 	return (params);
 }

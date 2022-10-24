@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philos.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 23:22:02 by enolbas           #+#    #+#             */
+/*   Updated: 2022/10/24 23:22:03 by enolbas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	create_philos(t_table *table)
@@ -5,7 +17,7 @@ void	create_philos(t_table *table)
 	int	count;
 
 	count = 0;
-	table->philos = (t_philo *) calloc(table->params->nb_philo, sizeof(t_philo));
+	table->philos = calloc(table->params->nb_philo, sizeof(t_philo));
 	if (!table->philos)
 	{
 		perror("Allocation philos ");
@@ -32,7 +44,8 @@ void	init_philos(t_table *table)
 	while (count < table->params->nb_philo)
 	{
 		get_id(table, count);
-		if (pthread_create(&table->philos[count].th, NULL, &set_actions, (void *) table) != 0)
+		if (pthread_create(&table->philos[count].th,
+				NULL, &set_actions, (void *) table) != 0)
 		{
 			return (error_philo(table, "cretation thread "));
 		}
