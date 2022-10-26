@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:54 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/24 23:21:55 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/10/26 13:08:08 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static size_t	get_start(t_table *table)
 
 static void	*check_end(t_table *table, int status)
 {
-	get_end(table, NULL, status);
+	kill_philo(&table->philos[status -1]);
+	set_end(table, NULL, status);
 	kill_philos(table);
 	return (NULL);
 }
@@ -50,11 +51,9 @@ void	*check_alive(void *table_tmp)
 		if (get_last_meal(table, &table->philos[count], 0)
 			+ table->params->die_time < get_time(table->params->start_time)
 			&& !get_eat(&table->philos[count], -1))
-		{
-			kill_philo(&table->philos[count]);
 			return (check_end(table, table->philos[count].id));
-		}
 		usleep(200);
+		// before return : kill_philo(&table->philos[count]);
 	}
 	return (NULL);
 }

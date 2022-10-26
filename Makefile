@@ -2,7 +2,7 @@ NAME		=	philo
 
 SRCS_FOLDER	=	srcs
 OBJS_FOLDER	=	objs
-INC_FOLDER	=	inc
+INC_FOLDER	=	includes
 
 CC		:=	gcc
 CFLAGS		:=	-Werror -Wextra -Wall -I$(INC_FOLDER)
@@ -13,6 +13,7 @@ SRCS_BASE	=	\
 			print				\
 			parser				\
 			getters				\
+			setters				\
 			ending				\
 			monitor				\
 			philos				\
