@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:52:30 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 13:52:12 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/10/26 18:09:21 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct s_table {
 // ****************** UTILS *********************//
 // **********************************************//
 t_param			*ft_parser(int ac, char **argv);
-int				ft_printf(const char *format, ...);
 void			free_table(t_table *table);
 void			ft_putstr_fd(int fd, char *s);
 void			*ft_calloc(size_t n, size_t size_of);
@@ -84,7 +83,6 @@ int				get_id(t_table *table, int status);
 // **********************************************//
 void			create_philos(t_table *table);
 void			init_philos(t_table *table);
-void			link_philos(t_table *table);
 void			join_philos(t_table *table);
 void			kill_philo(t_philo *philo);
 void			kill_philos(t_table *table);
@@ -94,6 +92,7 @@ void			error_philo(t_table *table, char *msg);
 // **********************************************//
 void			*check_alive(void *table);
 void			*set_actions(void *table);
+void			ft_usleep(t_table *table, size_t time);
 
 // ****************** INFOS *********************//
 // **********************************************//

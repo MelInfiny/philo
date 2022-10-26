@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 13:07:26 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 13:53:32 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/10/26 16:05:59 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	set_end(t_table *table, t_philo *philo, int status)
 		pthread_mutex_lock(philo->pprint);
 	res = table->end;
 	table->end = status;
-	//if (status == -1) printf("END : Each philosoph ils satisfied\n");
 	if (status > 0)
 		printf("%ld ms : %d is died\n",
 			get_time(table->params->start_time), table->end);

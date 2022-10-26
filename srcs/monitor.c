@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:54 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 15:32:49 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/10/26 15:41:54 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static size_t	get_start(t_table *table)
 
 static void	*check_end(t_table *table, int status)
 {
+	if (status == -1)
+		printf("Each philosophers is satisfied\n");
 	if (status > 0)
 		kill_philo(&table->philos[status -1]);
 	set_end(table, NULL, status);

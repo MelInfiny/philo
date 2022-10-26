@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:38 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 15:30:49 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/10/26 18:24:52 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	reset_infos(t_philo *philo, int id)
 
 void	set_infos(t_table *table, t_philo *philo, int status, bool state)
 {
+	if (!get_alive(philo, -2))
+		return ;
 	pthread_mutex_lock(philo->pprint);
 	if (status == 0)
 		philo->fork = state;
@@ -75,6 +77,7 @@ int	get_fork(t_table *table, t_philo *philo, int prec)
 		return (0);
 	set_fork(&table->philos[prec], 1);
 	set_infos(table, philo, 0, true);
+	set_infos(table, philo, 0, true);
 	return (1);
 }
 
@@ -96,9 +99,6 @@ void	*set_actions(void *table_tmp)
 	if (!philo->start)
 		usleep(500);
 	while (get_alive(philo, 2))
-	{
 		get_meal(table, philo, prec);
-		//usleep(100);
-	}
 	return (NULL);
 }

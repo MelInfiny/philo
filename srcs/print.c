@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:22:07 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 13:51:07 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/10/26 16:34:30 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ unsigned long	get_time(unsigned long start)
 void	print_infos(t_philo *philo, unsigned long time)
 {
 	if (philo->sleep)
-		printf("%ld ms : %d is sleeping\n", get_time(time), philo->id);
+		printf("%ld ms %d is sleeping\n", get_time(time), philo->id);
 	else if (philo->eat)
-		printf("%ld ms : %d is eating\n", get_time(time), philo->id);
+		printf("%ld ms %d is eating\n", get_time(time), philo->id);
 	else if (philo->think)
-		printf("%ld ms : %d is thinking\n", get_time(time), philo->id);
+		printf("%ld ms %d is thinking\n", get_time(time), philo->id);
 	else if (philo->fork)
-		printf("%ld ms : %d has taken a fork\n", get_time(time), philo->id);
+		printf("%ld ms %d has taken a fork\n", get_time(time), philo->id);
 }
