@@ -39,11 +39,11 @@ unsigned long	get_time(unsigned long start)
 void	print_infos(t_philo *philo, unsigned long time)
 {
 	if (philo->sleep)
-		ft_printf("%ld ms : %d is sleeping\n", get_time(time), philo->id);
+		printf("%ld ms : %d is sleeping\n", get_time(time), philo->id);
 	else if (philo->eat)
-		ft_printf("%ld ms : %d is eating\n", get_time(time), philo->id);
+		printf("%ld ms : %d is eating\n", get_time(time), philo->id);
 	else if (philo->think)
-		ft_printf("%ld ms : %d is thinking\n", get_time(time), philo->id);
+		printf("%ld ms : %d is thinking\n", get_time(time), philo->id);
 	else if (philo->fork)
-		ft_printf("%ld ms : %d has taken a fork\n", get_time(time), philo->id);
+		printf("%ld ms : %d has taken a fork\n", get_time(time), philo->id);
 }
