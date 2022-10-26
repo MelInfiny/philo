@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:38 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/24 23:21:40 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/10/26 15:30:49 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,11 @@ void	*set_actions(void *table_tmp)
 		return (NULL);
 	}
 	if (!philo->start)
-		usleep(1500);
+		usleep(500);
 	while (get_alive(philo, 2))
 	{
 		get_meal(table, philo, prec);
-		usleep(100);
+		//usleep(100);
 	}
 	return (NULL);
 }
