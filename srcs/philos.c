@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:22:02 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/24 23:22:03 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/10/26 13:53:56 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,3 @@ int	get_prec(t_table *table, t_philo *philo)
 		prec = id - 1;
 	return (prec);
 }
-/*
-void	link_philos(t_table *table)
-{
-	int	count;
-	int	prec;
-
-	count = 0;
-	while (count < table->params->nb_philo)
-	{
-		prec = get_prec(table, &table->philos[count]);
-		table->philos[count].next = &table->philos[prec].mutex;
-		count ++;
-	}
-}*/

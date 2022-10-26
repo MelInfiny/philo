@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:58 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/24 23:24:05 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/10/26 13:54:24 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	print_params(t_param *params)
 {
-	printf("nb_philosophers : %d\n", params->nb_philo);
-	printf("time_to_eat : %d\n", params->eat_time);
-	printf("time_to_die : %d\n", params->die_time);
-	printf("time_to_sleep : %d\n", params->sleep_time);
+	ft_printf("nb_philosophers : %d\n", params->nb_philo);
+	ft_printf("time_to_eat : %d\n", params->eat_time);
+	ft_printf("time_to_die : %d\n", params->die_time);
+	ft_printf("time_to_sleep : %d\n", params->sleep_time);
 	if (params->max_meals)
-		printf("max meals : %d\n", params->max_meals);
+		ft_printf("max meals : %d\n", params->max_meals);
 }
 
 static void	error_parsing(int error, t_param *params)
