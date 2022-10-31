@@ -96,6 +96,7 @@ void			ft_usleep(t_table *table, size_t time);
 
 // ****************** INFOS *********************//
 // **********************************************//
+void			print_fork(t_philo *philo, unsigned long time);
 void			print_infos(t_philo *philo, unsigned long time);
 void			reset_infos(t_philo *philo, int id);
 void			set_infos(t_table *t, t_philo *p, int status, bool state);

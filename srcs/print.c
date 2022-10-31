@@ -44,6 +44,12 @@ void	print_infos(t_philo *philo, unsigned long time)
 		printf("%ld ms %d is eating\n", get_time(time), philo->id);
 	else if (philo->think)
 		printf("%ld ms %d is thinking\n", get_time(time), philo->id);
-	else if (philo->fork)
-		printf("%ld ms %d has taken a fork\n", get_time(time), philo->id);
+}
+
+void	print_fork(t_philo *philo, unsigned long time)
+{
+	pthread_mutex_lock(philo->pprint);
+	printf("%ld ms %d has taken a fork\n", get_time(time), philo->id);
+	printf("%ld ms %d has taken a fork\n", get_time(time), philo->id);
+	pthread_mutex_unlock(philo->pprint);
 }

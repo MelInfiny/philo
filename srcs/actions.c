@@ -56,12 +56,12 @@ static void	get_meal(t_table *table, t_philo *philo, int prec)
 
 	if (get_fork(table, philo, prec) == 0)
 		return ;
-	set_infos(table, philo, 0, false);
 	set_infos(table, philo, 1, true);
 	get_last_meal(table, philo, 1);
 	usleep(table->params->eat_time * 1000);
 	set_infos(table, philo, 1, false);
 	set_infos(table, philo, 2, true);
+	set_infos(table, philo, 0, false);
 	set_infos(table, &table->philos[prec], 0, false);
 	meals = set_meal(philo, 1) + 1;
 	usleep(table->params->sleep_time * 1000);
@@ -73,11 +73,16 @@ static void	get_meal(t_table *table, t_philo *philo, int prec)
 
 int	get_fork(t_table *table, t_philo *philo, int prec)
 {
-	if (set_fork(philo, -1))
+	if (set_fork(philo, -1) || set_fork(&table->philos[prec], -1))
 		return (0);
-	set_fork(&table->philos[prec], 1);
-	set_infos(table, philo, 0, true);
-	set_infos(table, philo, 0, true);
+	pthread_mutex_lock(&philo->mutex);
+	pthread_mutex_lock(&table->philos[prec].mutex);
+	philo->fork = true;
+	table->philos[prec].fork = true;	
+	pthread_mutex_unlock(&table->philos[prec].mutex);
+	pthread_mutex_unlock(&philo->mutex);
+	if (set_end(table, philo, 0) == 0)
+		print_fork(philo, table->params->start_time);
 	return (1);
 }
 
