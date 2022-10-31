@@ -45,12 +45,12 @@ int	set_fork(t_philo *philo, int status)
 {	
 	int	res;
 
-	pthread_mutex_lock(philo->pprint);
+	pthread_mutex_lock(&philo->mutex);
 	res = philo->fork;
 	if (status == 1)
 		philo->fork = true;
 	else if (status == 0)
 		philo->fork = false;
-	pthread_mutex_unlock(philo->pprint);
+	pthread_mutex_unlock(&philo->mutex);
 	return (res);
 }

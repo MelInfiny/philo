@@ -45,6 +45,7 @@ typedef struct s_philo {
 	unsigned int		id;
 	unsigned int		meals;
 	unsigned long		last_meal;
+	int		prec;
 }	t_philo;
 
 typedef struct s_table {
@@ -92,12 +93,12 @@ void			error_philo(t_table *table, char *msg);
 // **********************************************//
 void			*check_alive(void *table);
 void			*set_actions(void *table);
-void			ft_usleep(t_table *table, size_t time);
+void			ft_usleep(t_philo *philo, size_t time);
 
 // ****************** INFOS *********************//
 // **********************************************//
-void			print_fork(t_philo *philo, unsigned long time);
-void			print_infos(t_philo *philo, unsigned long time);
+void			print_fork(t_table *table, t_philo *philo, int status);
+void			print_infos(t_table *table, t_philo *philo);
 void			reset_infos(t_philo *philo, int id);
 void			set_infos(t_table *t, t_philo *p, int status, bool state);
 #endif

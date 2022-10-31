@@ -11,21 +11,6 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	get_eat(t_philo *philo, int status)
-{
-	int	res;
-
-	pthread_mutex_lock(philo->pprint);
-	res = philo->eat;
-	if (status == 1)
-		philo->eat = true;
-	else if (status == 0)
-		philo->eat = false;
-	pthread_mutex_unlock(philo->pprint);
-	return (res);
-}
-
 int	get_alive(t_philo *philo, int status)
 {
 	int	res;

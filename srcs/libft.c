@@ -37,25 +37,17 @@ void	*ft_calloc(size_t n, size_t size)
 	return (ptr);
 }
 
-// time = 510 ; div = time / 100 * usleep(100) + usleep(time % 100)
-void	ft_usleep(t_table *table, size_t time)
+void	ft_usleep(t_philo *philo, size_t time)
 {
 	unsigned int	div;
-	unsigned int	newtime;
 	
-	if (time > 10000)
-		div = time / 10000;
-	else if (time > 1000)
-		div = time / 1000;
-	else
-		div = time - 1;
-	newtime = div;
-	while (newtime < time)
+	div = 0;	
+	while ((div + 200) < time)
 	{
-		if (set_end(table, NULL, -2) > 0)
+		usleep(200 * 1000);
+		div += 200;
+		if (!get_alive(philo, 2))
 			return ;
-		usleep(newtime * 1000);
-		newtime += newtime * div;
 	}
-	usleep(time % div);
+	usleep((time - div) *1000);
 }

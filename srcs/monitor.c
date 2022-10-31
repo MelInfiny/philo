@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-
+/*
 static size_t	get_start(t_table *table)
 {
 	size_t	min;
@@ -21,7 +21,7 @@ static size_t	get_start(t_table *table)
 		min = table->params->die_time;
 	return (min);
 }
-
+*/
 static void	*check_end(t_table *table, int status)
 {
 	if (status == -1)
@@ -41,7 +41,7 @@ void	*check_alive(void *table_tmp)
 
 	table = table_tmp;
 	count = -1;
-	usleep(get_start(table) * 1000);
+	//usleep(get_start(table) * 1000);
 	while (1)
 	{
 		if (count < table->params->nb_philo - 1)
@@ -52,8 +52,7 @@ void	*check_alive(void *table_tmp)
 		if (tmp > 0 && tmp >= table->params->nb_philo - 1)
 			return (check_end(table, -1));
 		if (get_last_meal(table, &table->philos[count], 0)
-			+ table->params->die_time < get_time(table->params->start_time)
-			&& !get_eat(&table->philos[count], -1))
+			+ table->params->die_time < get_time(table->params->start_time))
 			return (check_end(table, table->philos[count].id));
 		usleep(200);
 	}

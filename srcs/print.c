@@ -36,20 +36,35 @@ unsigned long	get_time(unsigned long start)
 	return ((stime + mstime) - start);
 }
 
-void	print_infos(t_philo *philo, unsigned long time)
+void	print_infos(t_table *table, t_philo *philo)
 {
-	if (philo->sleep)
-		printf("%ld ms %d is sleeping\n", get_time(time), philo->id);
-	else if (philo->eat)
-		printf("%ld ms %d is eating\n", get_time(time), philo->id);
-	else if (philo->think)
-		printf("%ld ms %d is thinking\n", get_time(time), philo->id);
+	unsigned long time;
+
+	time = table->params->start_time;
+	pthread_mutex_lock(&table->print);
+	if (table->end == 0)
+	{
+		if (philo->sleep)
+			printf("%ld ms %d is sleeping\n", get_time(time), philo->id);
+		else if (philo->eat)
+			printf("%ld ms %d is eating\n", get_time(time), philo->id);
+		else if (philo->think)
+			printf("%ld ms %d is thinking\n", get_time(time), philo->id);
+	}
+	pthread_mutex_unlock(&table->print);
 }
 
-void	print_fork(t_philo *philo, unsigned long time)
+void	print_fork(t_table *table, t_philo *philo, int status)
 {
-	pthread_mutex_lock(philo->pprint);
-	printf("%ld ms %d has taken a fork\n", get_time(time), philo->id);
-	printf("%ld ms %d has taken a fork\n", get_time(time), philo->id);
-	pthread_mutex_unlock(philo->pprint);
+	unsigned long time;
+
+	time = table->params->start_time;
+	pthread_mutex_lock(&table->print);
+	if (table->end == 0)
+	{
+		printf("%ld ms %d has taken a fork\n", get_time(time), philo->id);
+		if (status)
+			printf("%ld ms %d has taken a fork\n", get_time(time), philo->id);
+	}
+	pthread_mutex_unlock(&table->print);
 }

@@ -29,6 +29,7 @@ void	create_philos(t_table *table)
 	{
 		table->philos[count].pprint = &table->print;
 		reset_infos(&table->philos[count], count);
+		table->philos[count].prec = get_prec(table, &table->philos[count]);
 		if (count % 2 == 0 && count != table->params->nb_philo -1)
 			table->philos[count].start = true;
 		count ++;
@@ -49,7 +50,7 @@ void	init_philos(t_table *table)
 		{
 			return (error_philo(table, "cretation thread "));
 		}
-		usleep(200);
+		usleep(100);
 		count ++;
 	}
 }
