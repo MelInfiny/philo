@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:22:02 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 15:07:40 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:05:10 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_philos(t_table *table)
 		{
 			return (error_philo(table, "cretation thread "));
 		}
-		//usleep(500);
+		get_created(table, 1);
 		count ++;
 	}
 }

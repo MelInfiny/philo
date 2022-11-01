@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:54 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 15:31:25 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:05:29 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	*check_alive(void *table_tmp)
 
 	table = table_tmp;
 	count = -1;
-	// usleep(table->params->die_time * 1000);
+	while (get_created(table, 0) < table->params->nb_philo)
+		usleep(500);
 	while (1)
 	{
 		if (count < table->params->nb_philo - 1)

@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:38 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 15:06:30 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:12:37 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ void	*set_actions(void *philo_tmp)
 	t_philo	*philo;
 
 	philo = philo_tmp;
-
-	//printf("philo %d prec %d\n", philo->id, philo->prec->id);
 	if (philo->prec->id  == philo->id)
 	{
 		print_fork(philo, 0);
@@ -86,7 +84,10 @@ void	*set_actions(void *philo_tmp)
 	if (!philo->start)
 		usleep(100);
 	while (get_alive(philo, 2))
+	{
 		if (!living(philo))
 			break;
+		usleep(500);
+	}
 	return (NULL);
 }

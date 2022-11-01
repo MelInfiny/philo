@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:46 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 15:15:39 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:04:53 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ int	get_last_meal(t_philo *philo, int status)
 	return (res);
 }
 
-int	get_id(t_table *table, int status)
+int	get_created(t_table *table, int status)
 {
 	int	res;
 
 	pthread_mutex_lock(&table->print);
-	res = table->id;
-	if (status > 0)
-		table->id = status;
+	res = table->created;
+	if (status)
+		res = ++table->created;
 	pthread_mutex_unlock(&table->print);
 	return (res);
 }

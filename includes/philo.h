@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:52:30 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 14:34:28 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:06:02 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_table {
 	t_param			*params;
 	t_philo			*philos;
 	int				satisfied;
-	int				id;
+	int				created;
 	int				end;
 }	t_table;
 
@@ -72,13 +72,13 @@ unsigned long	get_time(unsigned long start);
 // **********************************************//
 int				get_fork(t_table *table, t_philo *philo, int prec);
 int				get_last_meal(t_philo *philo, int status);
-int				get_satisfied(t_table *table, t_philo *philo, int status);
+//int				get_satisfied(t_table *table, t_philo *philo, int status);
 int				get_eat(t_philo *philo, int status);
 int				set_end(t_table *table, t_philo *philo, int status);
 int				set_meal(t_philo *philo, int status);
 int				set_fork(t_philo *philo, int status);
 int				get_alive(t_philo *philo, int status);
-int				get_id(t_table *table, int status);
+int				get_created(t_table *table, int status);
 
 // ***************** PHILOS ********************//
 // **********************************************//
