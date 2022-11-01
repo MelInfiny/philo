@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:52:30 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 18:09:21 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 14:34:28 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ typedef struct s_philo {
 	bool				sleep;
 	bool				think;
 	bool				alive;
+	int					meals;
 	unsigned int		id;
-	unsigned int		meals;
 	unsigned long		last_meal;
-	int		prec;
+	struct	s_philo		*prec;
+	t_param				*params;
 }	t_philo;
 
 typedef struct s_table {
@@ -69,9 +70,8 @@ unsigned long	get_time(unsigned long start);
 
 // ***************** GETTERS ********************//
 // **********************************************//
-int				get_prec(t_table *table, t_philo *philo);
 int				get_fork(t_table *table, t_philo *philo, int prec);
-int				get_last_meal(t_table *table, t_philo *philo, int status);
+int				get_last_meal(t_philo *philo, int status);
 int				get_satisfied(t_table *table, t_philo *philo, int status);
 int				get_eat(t_philo *philo, int status);
 int				set_end(t_table *table, t_philo *philo, int status);
@@ -84,6 +84,7 @@ int				get_id(t_table *table, int status);
 // **********************************************//
 void			create_philos(t_table *table);
 void			init_philos(t_table *table);
+void			prec_philo(t_table *table);
 void			join_philos(t_table *table);
 void			kill_philo(t_philo *philo);
 void			kill_philos(t_table *table);
@@ -92,13 +93,12 @@ void			error_philo(t_table *table, char *msg);
 // ***************** THREADS ********************//
 // **********************************************//
 void			*check_alive(void *table);
-void			*set_actions(void *table);
+void			*set_actions(void *philo);
 void			ft_usleep(t_philo *philo, size_t time);
 
 // ****************** INFOS *********************//
 // **********************************************//
-void			print_fork(t_table *table, t_philo *philo, int status);
-void			print_infos(t_table *table, t_philo *philo);
-void			reset_infos(t_philo *philo, int id);
-void			set_infos(t_table *t, t_philo *p, int status, bool state);
+void			print_fork(t_philo *philo, int status);
+void			print_infos(t_philo *philo);
+void			reset_infos(t_table *table, t_philo *philo, int id);
 #endif

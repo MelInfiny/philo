@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:22:07 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 16:34:30 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 14:33:08 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ unsigned long	get_time(unsigned long start)
 	return ((stime + mstime) - start);
 }
 
-void	print_infos(t_table *table, t_philo *philo)
+void	print_infos(t_philo *philo)
 {
 	unsigned long time;
 
-	time = table->params->start_time;
-	pthread_mutex_lock(&table->print);
-	if (table->end == 0)
+	time = philo->params->start_time;
+	pthread_mutex_lock(philo->pprint);
+	if (philo->alive)
 	{
 		if (philo->sleep)
 			printf("%ld ms %d is sleeping\n", get_time(time), philo->id);
@@ -51,20 +51,20 @@ void	print_infos(t_table *table, t_philo *philo)
 		else if (philo->think)
 			printf("%ld ms %d is thinking\n", get_time(time), philo->id);
 	}
-	pthread_mutex_unlock(&table->print);
+	pthread_mutex_unlock(philo->pprint);
 }
 
-void	print_fork(t_table *table, t_philo *philo, int status)
+void	print_fork(t_philo *philo, int status)
 {
 	unsigned long time;
 
-	time = table->params->start_time;
-	pthread_mutex_lock(&table->print);
-	if (table->end == 0)
+	time = philo->params->start_time;
+	pthread_mutex_lock(philo->pprint);
+	if (philo->alive)
 	{
 		printf("%ld ms %d has taken a fork\n", get_time(time), philo->id);
 		if (status)
 			printf("%ld ms %d has taken a fork\n", get_time(time), philo->id);
 	}
-	pthread_mutex_unlock(&table->print);
+	pthread_mutex_unlock(philo->pprint);
 }

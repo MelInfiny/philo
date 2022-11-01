@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 13:07:26 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 16:05:59 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 15:31:15 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	set_meal(t_philo *philo, int status)
 
 	pthread_mutex_lock(philo->pprint);
 	res = philo->meals;
-	if (status)
-		philo->meals ++;
+	if (!status)
+		philo->meals = -1;
+	if (status > 0 && philo->meals > -1)
+		res = ++philo->meals;
 	pthread_mutex_unlock(philo->pprint);
 	return (res);
 }

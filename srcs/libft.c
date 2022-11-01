@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:22:17 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 18:22:15 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 12:52:05 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_usleep(t_philo *philo, size_t time)
 {
 	unsigned int	div;
 	
-	div = 0;	
+	div = 0;
 	while ((div + 200) < time)
 	{
 		usleep(200 * 1000);

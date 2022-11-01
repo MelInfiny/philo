@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:51 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/24 23:21:52 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 15:27:53 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	init_table(t_table *table, t_param *params)
 {
 	table->monitor = 0;
 	table->params = params;
-	table->satisfied = 0;
+	table->satisfied = -1;
 	table->end = 0;
 	table->id = 0;
 	pthread_mutex_init(&table->print, NULL);

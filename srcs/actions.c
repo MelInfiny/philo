@@ -6,13 +6,13 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:38 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 18:24:52 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 15:06:30 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	reset_infos(t_philo *philo, int id)
+void	reset_infos(t_table *table, t_philo *philo, int id)
 {
 	philo->th = 0;
 	philo->id = id + 1;
@@ -24,73 +24,69 @@ void	reset_infos(t_philo *philo, int id)
 	philo->alive = true;
 	philo->meals = 0;
 	philo->last_meal = 0;
+	philo->params = table->params;
+	philo->pprint = &table->print;
 	pthread_mutex_init(&philo->mutex, NULL);
 }
 
-static	int	eating(t_table *table, t_philo *philo)
+static	int	eating(t_philo *philo)
 {
 	set_fork(philo, 1);
-	set_fork(&table->philos[philo->prec], 1);
-	print_fork(table, philo, 1);
+	set_fork(philo->prec, 1);
+	print_fork(philo, 1);
 	philo->eat = true;
-	print_infos(table, philo);
-	get_last_meal(table, philo, 1);
+	print_infos(philo);
+	get_last_meal(philo, 1);
 	if (!get_alive(philo, 2))
 		return (0);
-	ft_usleep(philo, table->params->eat_time);
+	ft_usleep(philo, philo->params->eat_time);
 	philo->eat = false;
 	set_fork(philo, 0);
-	set_fork(&table->philos[philo->prec], 0);
+	set_fork(philo->prec, 0);
+	set_meal(philo, 1);
 	return (1);
 }
 
-static	int	sleeping(t_table *table, t_philo *philo)
+static	int	sleeping(t_philo *philo)
 {
 	philo->sleep = true;
-	print_infos(table, philo);
+	print_infos(philo);
 	if (!get_alive(philo, 2))
 		return (0);
-	ft_usleep(philo, table->params->sleep_time);
+	ft_usleep(philo, philo->params->sleep_time);
 	philo->sleep = false;
 	return (1);
 }
 
-static int	living(t_table *table, t_philo *philo)
+static int	living(t_philo *philo)
 {
-	unsigned int	meals;
-	if (set_fork(philo, -1) || set_fork(&table->philos[philo->prec], -1))
+	if (set_fork(philo, -1) || set_fork(philo->prec, -1))
 		return (1);
-	if (!eating(table, philo))
-		return (0);	
-	meals = set_meal(philo, 1) + 1;
-	if (!sleeping(table, philo))
+	if (!eating(philo))
+		return (0);
+	if (!sleeping(philo))
 		return (0);
 	philo->think = true;
-	if (table->params->max_meals > 0 && meals == table->params->max_meals)
-		get_satisfied(table, philo, 1);
 	return (1);
 }
 
-void	*set_actions(void *table_tmp)
+void	*set_actions(void *philo_tmp)
 {
-	t_table			*table;
-	t_philo			*philo;
-	unsigned int	prec;
+	t_philo	*philo;
 
-	table = table_tmp;
-	philo = &table->philos[get_id(table, 0)];
-	prec = philo->prec;
-	if (prec + 1 == philo->id)
+	philo = philo_tmp;
+
+	//printf("philo %d prec %d\n", philo->id, philo->prec->id);
+	if (philo->prec->id  == philo->id)
 	{
-		philo->fork = true;
-		print_fork(table, philo, 0);
-		usleep(table->params->die_time);
+		print_fork(philo, 0);
+		ft_usleep(philo, philo->params->die_time);
 		return (NULL);
 	}
 	if (!philo->start)
 		usleep(100);
 	while (get_alive(philo, 2))
-		if (!living(table, philo))
+		if (!living(philo))
 			break;
 	return (NULL);
 }

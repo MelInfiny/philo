@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:22:02 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 13:53:56 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 15:07:40 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ void	create_philos(t_table *table)
 	}
 	while (count < table->params->nb_philo)
 	{
-		table->philos[count].pprint = &table->print;
-		reset_infos(&table->philos[count], count);
-		table->philos[count].prec = get_prec(table, &table->philos[count]);
+		reset_infos(table, &table->philos[count], count);
 		if (count % 2 == 0 && count != table->params->nb_philo -1)
 			table->philos[count].start = true;
 		count ++;
 	}
+	prec_philo(table);
 }
 
 void	init_philos(t_table *table)
@@ -44,13 +43,12 @@ void	init_philos(t_table *table)
 	table->params->start_time = get_start_time();
 	while (count < table->params->nb_philo)
 	{
-		get_id(table, count);
 		if (pthread_create(&table->philos[count].th,
-				NULL, &set_actions, (void *) table) != 0)
+				NULL, &set_actions, (void *) &table->philos[count]) != 0)
 		{
 			return (error_philo(table, "cretation thread "));
 		}
-		usleep(100);
+		//usleep(500);
 		count ++;
 	}
 }
@@ -71,15 +69,19 @@ void	join_philos(t_table *table)
 	}
 }
 
-int	get_prec(t_table *table, t_philo *philo)
+void	prec_philo(t_table *table)
 {
 	int	id;
 	int	prec;
 
-	id = philo->id - 1;
-	if (id == 0)
-		prec = table->params->nb_philo - 1;
-	else
-		prec = id - 1;
-	return (prec);
+	id = 0;
+	while (id < table->params->nb_philo)
+	{
+		if (id == 0)
+			prec = table->params->nb_philo - 1;
+		else
+			prec = id - 1;
+		table->philos[id].prec = &table->philos[prec];
+		id ++;
+	}
 }

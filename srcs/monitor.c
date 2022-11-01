@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:54 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 15:41:54 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 15:31:25 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,22 @@ void	*check_alive(void *table_tmp)
 
 	table = table_tmp;
 	count = -1;
-	//usleep(get_start(table) * 1000);
+	// usleep(table->params->die_time * 1000);
 	while (1)
 	{
 		if (count < table->params->nb_philo - 1)
 			count ++;
 		else
 			count = 0;
-		tmp = get_satisfied(table, NULL, 0);
-		if (tmp > 0 && tmp >= table->params->nb_philo - 1)
+		tmp = set_meal(&table->philos[count], -1);
+		if (tmp == (int) table->params->max_meals)
+		{
+			++table->satisfied;
+			set_meal(&table->philos[count], 0);
+		}
+		if (table->satisfied >= table->params->nb_philo - 1 && table->params->max_meals > 0)
 			return (check_end(table, -1));
-		if (get_last_meal(table, &table->philos[count], 0)
+		if (get_last_meal(&table->philos[count], 0)
 			+ table->params->die_time < get_time(table->params->start_time))
 			return (check_end(table, table->philos[count].id));
 		usleep(200);
