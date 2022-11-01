@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:38 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 16:12:37 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:25:14 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	*set_actions(void *philo_tmp)
 	t_philo	*philo;
 
 	philo = philo_tmp;
-	if (philo->prec->id  == philo->id)
+	if (philo->prec->id == philo->id)
 	{
 		print_fork(philo, 0);
 		ft_usleep(philo, philo->params->die_time);
@@ -86,7 +86,7 @@ void	*set_actions(void *philo_tmp)
 	while (get_alive(philo, 2))
 	{
 		if (!living(philo))
-			break;
+			break ;
 		usleep(500);
 	}
 	return (NULL);

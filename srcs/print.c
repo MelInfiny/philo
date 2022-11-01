@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:22:07 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 14:33:08 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:19:02 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ unsigned long	get_time(unsigned long start)
 
 void	print_infos(t_philo *philo)
 {
-	unsigned long time;
+	unsigned long	time;
 
 	time = philo->params->start_time;
 	pthread_mutex_lock(philo->pprint);
@@ -56,7 +56,7 @@ void	print_infos(t_philo *philo)
 
 void	print_fork(t_philo *philo, int status)
 {
-	unsigned long time;
+	unsigned long	time;
 
 	time = philo->params->start_time;
 	pthread_mutex_lock(philo->pprint);

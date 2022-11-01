@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:43 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 15:16:39 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:28:02 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	kill_philos(t_table *table)
 	count = 0;
 	while (count < table->params->nb_philo)
 	{
-//		printf("count %d\n", count);
 		get_alive(&table->philos[count], 0);
 		count ++;
 	}

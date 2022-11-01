@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:22:17 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 12:52:05 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:19:25 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*ft_calloc(size_t n, size_t size)
 void	ft_usleep(t_philo *philo, size_t time)
 {
 	unsigned int	div;
-	
+
 	div = 0;
 	while ((div + 200) < time)
 	{
@@ -49,5 +49,5 @@ void	ft_usleep(t_philo *philo, size_t time)
 		if (!get_alive(philo, 2))
 			return ;
 	}
-	usleep((time - div) *1000);
+	usleep((time - div) * 1000);
 }

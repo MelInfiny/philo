@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:52:30 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 16:06:02 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:26:39 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_philo {
 	int					meals;
 	unsigned int		id;
 	unsigned long		last_meal;
-	struct	s_philo		*prec;
+	struct s_philo		*prec;
 	t_param				*params;
 }	t_philo;
 
@@ -72,7 +72,6 @@ unsigned long	get_time(unsigned long start);
 // **********************************************//
 int				get_fork(t_table *table, t_philo *philo, int prec);
 int				get_last_meal(t_philo *philo, int status);
-//int				get_satisfied(t_table *table, t_philo *philo, int status);
 int				get_eat(t_philo *philo, int status);
 int				set_end(t_table *table, t_philo *philo, int status);
 int				set_meal(t_philo *philo, int status);

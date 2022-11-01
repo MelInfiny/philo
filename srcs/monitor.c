@@ -6,22 +6,24 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:54 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 16:05:29 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:25:46 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-/*
-static size_t	get_start(t_table *table)
-{
-	size_t	min;
 
-	min = table->params->eat_time * table->params->nb_philo;
-	if (table->params->die_time < min)
-		min = table->params->die_time;
-	return (min);
+static void	get_meals(t_table *table, int count)
+{
+	int	tmp;
+
+	tmp = set_meal(&table->philos[count], -1);
+	if (tmp == (int) table->params->max_meals)
+	{
+		++table->satisfied;
+		set_meal(&table->philos[count], 0);
+	}
 }
-*/
+
 static void	*check_end(t_table *table, int status)
 {
 	if (status == -1)
@@ -37,7 +39,6 @@ void	*check_alive(void *table_tmp)
 {
 	t_table	*table;
 	int		count;
-	int		tmp;
 
 	table = table_tmp;
 	count = -1;
@@ -49,13 +50,9 @@ void	*check_alive(void *table_tmp)
 			count ++;
 		else
 			count = 0;
-		tmp = set_meal(&table->philos[count], -1);
-		if (tmp == (int) table->params->max_meals)
-		{
-			++table->satisfied;
-			set_meal(&table->philos[count], 0);
-		}
-		if (table->satisfied >= table->params->nb_philo - 1 && table->params->max_meals > 0)
+		get_meals(table, count);
+		if (table->satisfied >= table->params->nb_philo - 1
+			&& table->params->max_meals > 0)
 			return (check_end(table, -1));
 		if (get_last_meal(&table->philos[count], 0)
 			+ table->params->die_time < get_time(table->params->start_time))

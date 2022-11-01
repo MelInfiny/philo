@@ -6,11 +6,12 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:46 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 16:04:53 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:24:07 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 int	get_alive(t_philo *philo, int status)
 {
 	int	res;
