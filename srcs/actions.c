@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:38 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 16:25:14 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/02 17:44:31 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ static	int	eating(t_philo *philo)
 	set_fork(philo, 1);
 	set_fork(philo->prec, 1);
 	print_fork(philo, 1);
-	philo->eat = true;
-	print_infos(philo);
 	get_last_meal(philo, 1);
 	if (!get_alive(philo, 2))
 		return (0);
+	philo->eat = true;
+	print_infos(philo);
 	ft_usleep(philo, philo->params->eat_time);
 	philo->eat = false;
 	set_fork(philo, 0);
@@ -49,10 +49,10 @@ static	int	eating(t_philo *philo)
 
 static	int	sleeping(t_philo *philo)
 {
-	philo->sleep = true;
-	print_infos(philo);
 	if (!get_alive(philo, 2))
 		return (0);
+	philo->sleep = true;
+	print_infos(philo);
 	ft_usleep(philo, philo->params->sleep_time);
 	philo->sleep = false;
 	return (1);
@@ -62,11 +62,13 @@ static int	living(t_philo *philo)
 {
 	if (set_fork(philo, -1) || set_fork(philo->prec, -1))
 		return (1);
+	philo->think = false;
 	if (!eating(philo))
 		return (0);
 	if (!sleeping(philo))
 		return (0);
 	philo->think = true;
+	print_infos(philo);
 	return (1);
 }
 
@@ -81,13 +83,13 @@ void	*set_actions(void *philo_tmp)
 		ft_usleep(philo, philo->params->die_time);
 		return (NULL);
 	}
-	if (!philo->start)
-		usleep(100);
 	while (get_alive(philo, 2))
 	{
+		if (!set_start(philo, -1))
+			usleep(200);
 		if (!living(philo))
 			break ;
-		usleep(500);
+	//	usleep(500);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 13:07:26 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/02 14:28:46 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/02 16:28:17 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,20 @@ int	set_fork(t_philo *philo, int status)
 		philo->fork = true;
 	else if (status == 0)
 		philo->fork = false;
+	pthread_mutex_unlock(&philo->mutex);
+	return (res);
+}
+
+int	set_start(t_philo *philo, int status)
+{
+	int	res;
+
+	pthread_mutex_lock(&philo->mutex);
+	res = philo->start;
+	if (status == 1)
+		philo->start = true;
+	else if (status == 0)
+		philo->start = false;
 	pthread_mutex_unlock(&philo->mutex);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:52:30 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 16:26:39 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/02 16:27:56 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int				get_eat(t_philo *philo, int status);
 int				set_end(t_table *table, t_philo *philo, int status);
 int				set_meal(t_philo *philo, int status);
 int				set_fork(t_philo *philo, int status);
+int				set_start(t_philo *philo, int status);
 int				get_alive(t_philo *philo, int status);
 int				get_created(t_table *table, int status);
 
