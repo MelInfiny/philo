@@ -26,19 +26,18 @@ void	reset_infos(t_table *table, t_philo *philo, int id)
 	philo->last_meal = 0;
 	philo->params = table->params;
 	philo->pprint = &table->print;
+	philo->iinfo = &table->info;
 	pthread_mutex_init(&philo->mutex, NULL);
 }
 
 static	int	eating(t_philo *philo)
 {
+	print_fork(philo, 1);
+	print_infos(philo, 1);
 	set_fork(philo, 1);
 	set_fork(philo->prec, 1);
-	print_fork(philo, 1);
 	get_last_meal(philo, 1);
-	if (!get_alive(philo, 2))
-		return (0);
 	philo->eat = true;
-	print_infos(philo);
 	ft_usleep(philo, philo->params->eat_time);
 	philo->eat = false;
 	set_fork(philo, 0);
@@ -49,12 +48,12 @@ static	int	eating(t_philo *philo)
 
 static	int	sleeping(t_philo *philo)
 {
-	if (!get_alive(philo, 2))
-		return (0);
+	print_infos(philo, 2);
 	philo->sleep = true;
-	print_infos(philo);
 	ft_usleep(philo, philo->params->sleep_time);
 	philo->sleep = false;
+	print_infos(philo, 0);
+	philo->think = true;
 	return (1);
 }
 
@@ -63,12 +62,9 @@ static int	living(t_philo *philo)
 	if (set_fork(philo, -1) || set_fork(philo->prec, -1))
 		return (1);
 	philo->think = false;
-	if (!eating(philo))
-		return (0);
-	if (!sleeping(philo))
-		return (0);
-	philo->think = true;
-	print_infos(philo);
+	philo->start = false;
+	eating(philo);
+	sleeping(philo);
 	return (1);
 }
 
@@ -85,11 +81,12 @@ void	*set_actions(void *philo_tmp)
 	}
 	while (get_alive(philo, 2))
 	{
-		if (!set_start(philo, -1))
-			usleep(200);
-		if (!living(philo))
-			break ;
-	//	usleep(500);
+		if (!philo->start)
+		{
+			usleep(100);
+			philo->start = true;
+		}
+		living(philo);
 	}
 	return (NULL);
 }

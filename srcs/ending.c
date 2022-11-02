@@ -23,6 +23,7 @@ static void	free_mutex(t_table *table)
 		count ++;
 	}
 	pthread_mutex_destroy(&table->print);
+	pthread_mutex_destroy(&table->info);
 }
 
 void	free_table(t_table *table)

@@ -24,30 +24,13 @@ static void	get_meals(t_table *table, int count)
 	}
 }
 
-static void	pair_meal(t_table *table)
-{
-	int	last;
-
-	last = table->params->nb_philo -1;
-	if (get_time(table->params->start_time) <= 2 *(table->params->eat_time))
-		return ;
-	if (get_last_meal(&table->philos[0], 0) > get_last_meal(&table->philos[last], 0))
-	{
-		set_start(&table->philos[0], 0);
-		set_start(&table->philos[last], 1);
-	}
-	else
-	{
-		set_start(&table->philos[0], 1);
-		set_start(&table->philos[last], 0);
-	}
-}
-
 static void	*check_end(t_table *table, int status)
 {
 	if (status > 0)
+	{
 		kill_philo(&table->philos[status -1]);
-	set_end(table, NULL, status);
+		print_end(table, status);
+	}
 	kill_philos(table);
 	return (NULL);
 }
@@ -74,7 +57,6 @@ void	*check_alive(void *table_tmp)
 		if (get_last_meal(&table->philos[count], 0)
 			+ table->params->die_time < get_time(table->params->start_time))
 			return (check_end(table, table->philos[count].id));
-		pair_meal(table);
 		usleep(200);
 	}
 	return (NULL);

@@ -29,7 +29,7 @@ void	create_philos(t_table *table)
 	{
 		reset_infos(table, &table->philos[count], count);
 		if (count % 2 == 0 && count != table->params->nb_philo -1)
-			set_start(&table->philos[count], 1);
+			table->philos[count].start = true;;
 		count ++;
 	}
 	prec_philo(table);

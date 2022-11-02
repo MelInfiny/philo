@@ -36,6 +36,7 @@ typedef struct s_philo {
 	pthread_t			th;
 	pthread_mutex_t		mutex;
 	pthread_mutex_t		*pprint;
+	pthread_mutex_t		*iinfo;
 	bool				start;
 	bool				fork;
 	bool				eat;
@@ -51,6 +52,7 @@ typedef struct s_philo {
 
 typedef struct s_table {
 	pthread_mutex_t	print;
+	pthread_mutex_t	info;
 	pthread_t		monitor;
 	t_param			*params;
 	t_philo			*philos;
@@ -72,8 +74,8 @@ unsigned long	get_time(unsigned long start);
 // **********************************************//
 int				get_fork(t_table *table, t_philo *philo, int prec);
 int				get_last_meal(t_philo *philo, int status);
-int				get_eat(t_philo *philo, int status);
-int				set_end(t_table *table, t_philo *philo, int status);
+//int				get_eat(t_philo *philo, int status);
+//int				set_end(t_table *table, t_philo *philo, int status);
 int				set_meal(t_philo *philo, int status);
 int				set_fork(t_philo *philo, int status);
 int				set_start(t_philo *philo, int status);
@@ -99,6 +101,7 @@ void			ft_usleep(t_philo *philo, size_t time);
 // ****************** INFOS *********************//
 // **********************************************//
 void			print_fork(t_philo *philo, int status);
-void			print_infos(t_philo *philo);
+void			print_infos(t_philo *philo, int status);
+void			print_end(t_table *table, int status);
 void			reset_infos(t_table *table, t_philo *philo, int id);
 #endif

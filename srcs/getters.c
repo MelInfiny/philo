@@ -16,28 +16,13 @@ int	get_alive(t_philo *philo, int status)
 {
 	int	res;
 
-	pthread_mutex_lock(philo->pprint);
+	pthread_mutex_lock(philo->iinfo);
 	res = philo->alive;
 	if (status == 1)
 		philo->alive = true;
 	else if (status == 0)
 		philo->alive = false;
-	pthread_mutex_unlock(philo->pprint);
-	return (res);
-}
-
-int	get_satisfied(t_table *table, t_philo *philo, int status)
-{
-	int	res;
-
-	if (philo == NULL)
-		pthread_mutex_lock(&table->print);
-	else
-		pthread_mutex_lock(philo->pprint);
-	res = table->satisfied;
-	if (status == 1)
-		table->satisfied ++;
-	pthread_mutex_unlock(&table->print);
+	pthread_mutex_unlock(philo->iinfo);
 	return (res);
 }
 
@@ -45,11 +30,11 @@ int	get_last_meal(t_philo *philo, int status)
 {
 	int	res;
 
-	pthread_mutex_lock(philo->pprint);
+	pthread_mutex_lock(philo->iinfo);
 	res = philo->last_meal;
 	if (status == 1)
 		philo->last_meal = get_time(philo->params->start_time);
-	pthread_mutex_unlock(philo->pprint);
+	pthread_mutex_unlock(philo->iinfo);
 	return (res);
 }
 

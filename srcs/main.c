@@ -20,6 +20,7 @@ static void	init_table(t_table *table, t_param *params)
 	table->end = 0;
 	table->created = 0;
 	pthread_mutex_init(&table->print, NULL);
+	pthread_mutex_init(&table->info, NULL);
 }
 
 static void	philosophers(t_table *table)
