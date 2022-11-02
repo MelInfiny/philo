@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:58 by enolbas           #+#    #+#             */
-/*   Updated: 2022/10/26 13:54:24 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/02 15:07:36 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	print_params(t_param *params)
 
 static void	error_parsing(int error, t_param *params)
 {
+	ft_putstr_fd(2, " : Bad input parameters\n");
 	if (error == 1)
-		ft_putstr_fd(2, "Error : Invalid number of arguments\n");
+		ft_putstr_fd(2, "Error: Invalid number of arguments\n");
 	if (error == 2)
-		ft_putstr_fd(2, ": Invalid format of arguments\n");
+		ft_putstr_fd(2, "Error: Invalid format of arguments\n");
 	if (error == 3)
-		ft_putstr_fd(2, ": Cannot launch simulation with parameters <= 0\n");
-	ft_putstr_fd(2, ": Bad input parameters\n");
+		ft_putstr_fd(2, "Cannot launch simulation with parameters <= 0\n");
 	free(params);
 	exit(1);
 }
@@ -62,7 +62,7 @@ static int	ft_atoi(char *s, int *sign)
 	return (num * *sign);
 }
 
-static unsigned int	check_int(char *s, t_param *params)
+static unsigned int	check_int(char *s, t_param *params, int status)
 {
 	int	sign;
 	int	nbr;
@@ -76,6 +76,8 @@ static unsigned int	check_int(char *s, t_param *params)
 	}
 	else if (nbr <= 0)
 	{
+		if (status && nbr == 0)
+			return (0);
 		ft_putstr_fd(2, s);
 		error_parsing(3, params);
 	}
@@ -91,13 +93,11 @@ t_param	*ft_parser(int ac, char **argv)
 		exit(1);
 	if (ac < 5 || ac > 6)
 		error_parsing(1, params);
-	params->nb_philo = check_int(argv[1], params);
-	params->die_time = check_int(argv[2], params);
-	params->eat_time = check_int(argv[3], params);
-	params->sleep_time = check_int(argv[4], params);
+	params->nb_philo = check_int(argv[1], params, 0);
+	params->die_time = check_int(argv[2], params, 0);
+	params->eat_time = check_int(argv[3], params, 0);
+	params->sleep_time = check_int(argv[4], params, 0);
 	if (ac == 6)
-		params->max_meals = check_int(argv[5], params);
-	else
-		params->max_meals = 0;
+		params->max_meals = check_int(argv[5], params, 1);
 	return (params);
 }

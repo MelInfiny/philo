@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:22:07 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 16:19:02 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/02 14:28:33 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	print_infos(t_philo *philo)
 	if (philo->alive)
 	{
 		if (philo->sleep)
-			printf("%ld ms %d is sleeping\n", get_time(time), philo->id);
+			printf("%ld %d is sleeping\n", get_time(time), philo->id);
 		else if (philo->eat)
-			printf("%ld ms %d is eating\n", get_time(time), philo->id);
+			printf("%ld %d is eating\n", get_time(time), philo->id);
 		else if (philo->think)
-			printf("%ld ms %d is thinking\n", get_time(time), philo->id);
+			printf("%ld %d is thinking\n", get_time(time), philo->id);
 	}
 	pthread_mutex_unlock(philo->pprint);
 }
@@ -62,9 +62,9 @@ void	print_fork(t_philo *philo, int status)
 	pthread_mutex_lock(philo->pprint);
 	if (philo->alive)
 	{
-		printf("%ld ms %d has taken a fork\n", get_time(time), philo->id);
+		printf("%ld %d has taken a fork\n", get_time(time), philo->id);
 		if (status)
-			printf("%ld ms %d has taken a fork\n", get_time(time), philo->id);
+			printf("%ld %d has taken a fork\n", get_time(time), philo->id);
 	}
 	pthread_mutex_unlock(philo->pprint);
 }

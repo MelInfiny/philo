@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 13:07:26 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/01 15:31:15 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/02 14:28:46 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	set_end(t_table *table, t_philo *philo, int status)
 	res = table->end;
 	table->end = status;
 	if (status > 0)
-		printf("%ld ms : %d is died\n",
+		printf("%ld %d is died\n",
 			get_time(table->params->start_time), table->end);
 	pthread_mutex_unlock(&table->print);
 	return (res);
