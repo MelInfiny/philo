@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:22:07 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/02 17:37:45 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/03 11:59:21 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ unsigned long	get_time(unsigned long start)
 void	print_infos(t_philo *philo, int status)
 {
 	unsigned long	time;
-	char	*str;
+	char			*str;
 
 	time = philo->params->start_time;
 	if (status == 2)

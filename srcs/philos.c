@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:22:02 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/02 17:04:07 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/03 12:00:00 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	create_philos(t_table *table)
 	{
 		reset_infos(table, &table->philos[count], count);
 		if (count % 2 == 0 && count != table->params->nb_philo -1)
-			table->philos[count].start = true;;
+				table->philos[count].start = true;
 		count ++;
 	}
 	prec_philo(table);
