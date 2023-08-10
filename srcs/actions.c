@@ -6,7 +6,7 @@
 /*   By: enolbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 23:21:38 by enolbas           #+#    #+#             */
-/*   Updated: 2022/11/02 17:44:31 by enolbas          ###   ########.fr       */
+/*   Updated: 2022/11/03 17:16:15 by enolbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	*set_actions(void *philo_tmp)
 			philo->start = true;
 		}
 		living(philo);
+		usleep(100);
 	}
 	return (NULL);
 }
